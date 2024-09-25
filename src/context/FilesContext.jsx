@@ -8,8 +8,8 @@ const FilesContext = createContext();
 export const FilesProvider = ({ children }) => {
   const { setItem } = useLocalStorage();
   const { alertInfo, showHide } = useAlert();
-  const [files, setFiles] = useState([]);
-  // const [files, setFiles] = useState(FilesData);
+  // const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState(FilesData);
 
   useEffect(() => {
     getFiles();
