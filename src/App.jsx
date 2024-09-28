@@ -12,6 +12,7 @@ import Verify from "./components/pages/Verify";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import FolderFiles from "./components/FolderFiles";
+import VerifyEmail from "./components/pages/VerifyEmail";
 // import Index from "./components/pages/Index";
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/folders" element={<FolderFiles />} /> Folder contents page */}
+              <Route path="/resend-verify" element={<VerifyEmail />} /> 
               {/* <Route path="/folders/:folderId" element={<FolderFiles />} />  */}
             </Routes>
           </Router>

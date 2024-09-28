@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import FilesContext from "../../context/FilesContext";
 
 function Verify() {
     const [verificationStatus, setVerificationStatus] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
+    const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
+    const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const navigate = useNavigate();
 
   // Function to decode base64 encoded u_info
   const decodeUserInfo = (u_info) => {
@@ -42,7 +44,7 @@ function Verify() {
           // Make a POST request to the backend for email verification
           const verifyEmail = async () => {
             try {
-              const res = await fetch("https://proodoosfiles.onrender.com/api/verify/", {
+              const res = await fetch(`${devurl}/api/verify/`, {
               // const res = await fetch("http://127.0.0.1:8000/api/verify/", {
                 method: "POST",
                 headers: {

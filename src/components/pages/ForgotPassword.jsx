@@ -2,18 +2,16 @@ import React, { useContext, useState } from "react";
 import FilesContext from "../../context/FilesContext";
 
 function ForgotPassword() {
-    const { showHide } = useContext(FilesContext);
+    const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
     const [email, setEmail] = useState("");
-    const [url, setUrl] = useState("https://proodo-files-ozie.vercel.app/reset-password");
-    // const [url, setUrl] = useState("http://localhost:5173/reset-password");
+    const [url, setUrl] = useState(`${clientdevurl}/reset-password`);
     const [message, setMessage] = useState("");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       
       try {
-        const response = await fetch("https://proodoosfiles.onrender.com/api/forgot-pass/", {
-        // const response = await fetch("http://127.0.0.1:8000/api/forgot-pass/", {
+        const response = await fetch(`${devurl}/api/forgot-pass/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import FilesContext from "../../context/FilesContext";
 
 // Utility to parse query parameters
 function useQuery() {
@@ -7,6 +8,7 @@ function useQuery() {
 }
 
 function ResetPassword() {
+  const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState("");
@@ -39,7 +41,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await fetch(`https://proodoosfiles.onrender.com/api/rest-pswd/`, {
+      const response = await fetch(`${devurl}/api/rest-pswd/`, {
       // const response = await fetch(`http://127.0.0.1:8000/api/rest-pswd/`, {
         method: "POST",
         headers: {
