@@ -1,17 +1,53 @@
-import React, {useState} from 'react';
-import { Link } from "react-router-dom";
+import React, {useState, useContext} from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import useLocalStorage from '../../hooks/useLocalStorage';
+import AuthContext from '../../context/AuthContext';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import FilesContext from '../../context/FilesContext';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setItem, getItem, deleteItem } = useLocalStorage("auth-token");
+  const { setItem } = useLocalStorage("token");
+  const [state, dispatch] = useContext(AuthContext);
+  const redirect = useNavigate();
+  const { showHide } = useContext(FilesContext)
 
   const loginHandler = async (e) => {
     e.preventDefault();
-  }
+    if (!email || !password) {
+      showHide("error", "Email and Passowrd is required")
+      return;
+    } 
+    try {
+      const res = await fetch("https://proodoosfiles.onrender.com/api/login/", {
+      // const res = await fetch("http://127.0.0.1:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log(res)
+      const data = await res.json();
+      console.log(data);
+      console.log(data.responseText)
+      if (!res.ok) {
+        showHide("error", data.responseText);
+      }else {
+        dispatch({ type: "setToken", payload: data.token });
+        setItem(data.token);
+        // Storing token and full name in localStorage
+        // localStorage.setItem("token", data.token);
+        localStorage.setItem("full_name", data.full_name);
+        redirect("/dashboard");
+        showHide("success", "you are now logged in");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div>
@@ -65,7 +101,7 @@ function Login() {
               </form>
               <div className="mb-3 flex justify-between items-center">
                 <Link to="/register">Don't have an account?..</Link>
-                <Link to="">Forgot password?..</Link>
+                <Link to="/forgot-password">Forgot password?..</Link>
               </div>
             </div>
           </div>

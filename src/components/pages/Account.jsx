@@ -3,9 +3,12 @@ import Card from "../shared/Card";
 import Files from "../Files";
 import Documents from "../Documents";
 import FilesContext from "../../context/FilesContext";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 function Account() {
-  const { files } = useContext(FilesContext);
+  const { files, isAuthenticated } = useContext(FilesContext);
+  // const { getItem } = useLocalStorage("token");
+  const fullName = localStorage.getItem("full_name");
   return (
     <div>
       <h1 className="text-3xl font-bold">My Dashboard</h1>
@@ -14,7 +17,7 @@ function Account() {
           <Card>
             <div className="flex flex-wrap justify-between items-center p-4">
               <div>
-                <h1 className="text-2xl font-semibold pb-2">Welcome, Ozie!</h1>
+                <h1 className="text-2xl font-semibold pb-2">Welcome, {fullName}!</h1>
                 <p className="text-gray-600">
                   You have {files.length ?? 0} files
                 </p>
@@ -34,7 +37,11 @@ function Account() {
             <div className="p-1">
               <h1 className="text-xl font-semibold pb-2">Quick start</h1>
               <div className="flex items-center justify-center">
-                <img src="/img/folder1.png" className="w-36" alt="Background" />
+                <form action="">
+                  <button type="submit" className="w-full h-auto">
+                    <img src="/img/folder1.png" className="w-36" alt="Background" />
+                  </button>
+                </form>
               </div>
             </div>
           </Card>

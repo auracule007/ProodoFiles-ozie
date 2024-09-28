@@ -22,7 +22,7 @@ function FileItems({ files_items_props }) {
               <td>{file.title}</td>
               <td className="text-center align-middle">
                 <img
-                  src={file.path}
+                  src={"/img/download.jpeg"}
                   // src={"http://localhost:3000" + file.path}
                   className="w-[50px] h-[50px] object-cover"
                   alt=""

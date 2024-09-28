@@ -4,7 +4,57 @@
             "id": 1,
             "title": "Excel File",
             "fileType": "img",
-            "path": "/img/excelImage.png"
+            "path": "/img/folder5.png"
+        },
+        {
+            "id": 2,
+            "title": "Image File",
+            "fileType": "pdf",
+            "path": "/img/imgImage.png"
+        },
+        {
+            "id": 3,
+            "title": "PDF File",
+            "fileType": "pdf",
+            "path": "/img/pdfImage.png"
+        },
+        {
+            "id": 4,
+            "title": "PowerPoint File",
+            "fileType": "pdf",
+            "path": "/img/powerImage.png"
+        },
+        {
+            "id": 5,
+            "title": "PowerPoint File",
+            "fileType": "excel",
+            "path": "/img/powerImage.png"
+        },
+        {
+            "id": 6,
+            "title": "PowerPoint File",
+            "fileType": "pdf",
+            "path": "/img/powerImage.png"
+        },
+        {
+            "id": 7,
+            "title": "PowerPoint File",
+            "fileType": "pdf",
+            "path": "/img/powerImage.png"
+        },
+        {
+            "id": 8,
+            "title": "PowerPoint File",
+            "fileType": "pdf",
+            "path": "/img/powerImage.png"
+        }
+    ],
+    "folders": [
+        {
+            "id": 1,
+            "title": "Excel File",
+            "fileType": "img",
+            "path": "/img/folder5.png"
         },
         {
             "id": 2,

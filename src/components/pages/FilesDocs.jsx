@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import Files from "../Files";
 import Documents from "../Documents";
 import { FaSearch } from "react-icons/fa";
 import Card from "../shared/Card";
+import FilesContext from "../../context/FilesContext";
 
 function FilesDocs() {
   const [selectedFormat, setSelectedFormat] = useState("");
+  const { isAuthenticated} = useContext(FilesContext);
+
+  if(!isAuthenticated){
+    return <Navigate to="/" />
+  }
 
   const handleFormatChange = (e) => {
     setSelectedFormat(e.target.value);
