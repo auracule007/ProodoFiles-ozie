@@ -44,7 +44,7 @@ function Verify() {
           // Make a POST request to the backend for email verification
           const verifyEmail = async () => {
             try {
-              const res = await fetch(`${devurl}/api/verify/`, {
+              const res = await fetch(`${produrl}/api/verify/`, {
               // const res = await fetch("http://127.0.0.1:8000/api/verify/", {
                 method: "POST",
                 headers: {

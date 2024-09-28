@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 function VerifyEmail() {
   const { devurl, showHide, produrl, clientdevurl, clientProdurl } = useContext(FilesContext);
   const [email, setEmail] = useState("");
-  const [url, setUrl] = useState(`${clientdevurl}/verify`); // Ensure clientdevurl is correctly defined in context
+  const [url, setUrl] = useState(`${clientProdurl}/verify`); // Ensure clientdevurl is correctly defined in context
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Using navigate for programmatic routing
 
   const handleVerifyEmail = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${devurl}/api/resender/`, {
+      const res = await fetch(`${produrl}/api/resender/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

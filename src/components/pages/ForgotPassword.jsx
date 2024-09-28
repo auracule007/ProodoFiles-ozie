@@ -4,14 +4,14 @@ import FilesContext from "../../context/FilesContext";
 function ForgotPassword() {
     const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
     const [email, setEmail] = useState("");
-    const [url, setUrl] = useState(`${clientdevurl}/reset-password`);
+    const [url, setUrl] = useState(`${clientProurl}/reset-password`);
     const [message, setMessage] = useState("");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       
       try {
-        const response = await fetch(`${devurl}/api/forgot-pass/`, {
+        const response = await fetch(`${produrl}/api/forgot-pass/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

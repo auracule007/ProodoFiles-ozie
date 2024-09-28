@@ -10,7 +10,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [full_name, setFullName] = useState("");
   const [password, setPassword] = useState("");
-  const [url, setUrl] = useState(`${clientdevurl}/verify`);
+  const [url, setUrl] = useState(`${clientProurl}/verify`);
   // const [url, setUrl] = useState("http://localhost:5173/verify");
   const navigate = useNavigate(); // Use 'navigate' instead of 'redirect'
 
@@ -27,7 +27,7 @@ function Register() {
     formData.append("url", url);
 
     try {
-      const res = await fetch(`${devurl}/api/sign-up/`, {
+      const res = await fetch(`${produrl}/api/sign-up/`, {
       // const res = await fetch("http://127.0.0.1:8000/api/sign-up/", {
         method: "POST",
         headers: {

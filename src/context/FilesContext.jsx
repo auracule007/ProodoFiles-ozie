@@ -33,7 +33,7 @@ export const FilesProvider = ({ children }) => {
 
   const getFiles = async () => {
     try {
-      const res = await fetch(`${devurl}/api/user-files/`, {
+      const res = await fetch(`${produrl}/api/user-files/`, {
       // const res = await fetch("https://proodoosfiles.onrender.com/api/user-files/", {
         method: "GET",
         headers: {
@@ -61,7 +61,7 @@ export const FilesProvider = ({ children }) => {
         ? { folder_name, parent_folder_id }  // Include parent_folder_id only for subfolders
         : { folder_name };                   // Exclude parent_folder_id for root-level folders
   
-      const res = await fetch(`${devurl}/api/create-f/`, {
+      const res = await fetch(`${produrl}/api/create-f/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -113,7 +113,7 @@ export const FilesProvider = ({ children }) => {
   
   const getFolders = async () => {
     try {
-      const res = await fetch(`${devurl}/api/get-folders/`, {
+      const res = await fetch(`${produrl}/api/get-folders/`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -142,7 +142,7 @@ export const FilesProvider = ({ children }) => {
       formData.append("folder_id", folder_id);
       files.forEach(file => formData.append("files", file)); // This will now work
       
-      const res = await fetch(`${devurl}/api/upload_file/`, {
+      const res = await fetch(`${produrl}/api/upload_file/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -169,7 +169,7 @@ export const FilesProvider = ({ children }) => {
   
   const getFolderItems = async (folderId) => {
     try {
-      const res = await fetch(`${devurl}/api/view_fo/?folder_id=${folderId}`, {
+      const res = await fetch(`${produrl}/api/view_fo/?folder_id=${folderId}`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -197,7 +197,7 @@ export const FilesProvider = ({ children }) => {
   
   const downloadFile = async (file_id) => {
     try {
-      const res = await fetch(`${devurl}/api/download_file/?file_id=${file_id}`, {
+      const res = await fetch(`${produrl}/api/download_file/?file_id=${file_id}`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -229,7 +229,7 @@ export const FilesProvider = ({ children }) => {
   const deleteFolder = async (folder_id) => {
     if(window.confirm("Are you sure you want to delete?..")){
       try {
-        const res = await fetch(`${devurl}/api/fo/del/`, {
+        const res = await fetch(`${produrl}/api/fo/del/`, {
           method: "POST",
           headers:{
             "Authorization": `Token ${getItem("token")}`,
@@ -256,7 +256,7 @@ export const FilesProvider = ({ children }) => {
 
     const binFolder = async (folderId) => {
       try {
-        const res = await fetch(`${devurl}/api/fo/bin/`, {
+        const res = await fetch(`${produrl}/api/fo/bin/`, {
           method: 'POST',
           headers: {
             "Authorization": `Token ${getItem("token")}`,
@@ -280,7 +280,7 @@ export const FilesProvider = ({ children }) => {
 
     const starredFolder = async (folderId) => {
       try {
-        const response = await fetch(`${devurl}/api/fo/star/`, {
+        const response = await fetch(`${produrl}/api/fo/star/`, {
           method: 'POST',
           headers: {
             "Authorization": `Token ${getItem("token")}`,
@@ -347,7 +347,7 @@ export const FilesProvider = ({ children }) => {
         binFolder,
         starredFolder,
         produrl, 
-        devurl, 
+        produrl, 
         clientProurl, 
         clientdevurl,
       }}
