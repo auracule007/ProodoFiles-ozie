@@ -22,8 +22,8 @@ export const FilesProvider = ({ children }) => {
   useEffect(() => {
     getFiles()
     getFolders()
-  }, []);
-  // }, [folder, files]);
+  // }, []);
+  }, [folder, files]);
 
   const getFiles = async () => {
     try {
@@ -42,7 +42,7 @@ export const FilesProvider = ({ children }) => {
         showHide("error", "Unable to get File data");
       } else {
         setFiles(data);
-        showHide("success", "File data successfully fetched");
+        // showHide("success", "File data successfully fetched");
       }
     } catch (error) {
       console.log(error);
@@ -74,7 +74,7 @@ export const FilesProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
-      showHide("error", "An error occurred while creating the folder");
+      // showHide("error", "An error occurred while creating the folder");
     }
   };
   
@@ -127,7 +127,7 @@ export const FilesProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
-      showHide("error", "An error occurred while creating the folder");
+      // showHide("error", "An error occurred while creating the folder");
     }
   };
 
@@ -157,7 +157,7 @@ export const FilesProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      showHide("error", "An error occurred while uploading files.");
+      // showHide("error", "An error occurred while uploading files.");
     }
   };
   
@@ -185,7 +185,7 @@ export const FilesProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
-      showHide("error", "An error occurred while fetching folder items");
+      // showHide("error", "An error occurred while fetching folder items");
       return [];
     }
   };
@@ -216,7 +216,7 @@ export const FilesProvider = ({ children }) => {
       showHide("success", "File is downloading");
     } catch (error) {
       console.error("Download error:", error);
-      showHide("error", "An error occurred during download");
+      // showHide("error", "An error occurred during download");
     }
   };
 
