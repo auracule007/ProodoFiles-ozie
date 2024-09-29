@@ -4,13 +4,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import FilesContext from "../../context/FilesContext";
 
 function Register() {
-  const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
+  const { showHide, devurl, clientdevurl } = useContext(FilesContext);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [full_name, setFullName] = useState("");
   const [password, setPassword] = useState("");
-  const [url, setUrl] = useState(`${clientProurl}/verify`);
+  const [url, setUrl] = useState(`${clientdevurl}/verify`);
   // const [url, setUrl] = useState("http://localhost:5173/verify");
   const navigate = useNavigate(); // Use 'navigate' instead of 'redirect'
 
@@ -27,7 +27,7 @@ function Register() {
     formData.append("url", url);
 
     try {
-      const res = await fetch(`${produrl}/api/sign-up/`, {
+      const res = await fetch(`${devurl}/api/sign-up/`, {
       // const res = await fetch("http://127.0.0.1:8000/api/sign-up/", {
         method: "POST",
         headers: {
@@ -37,7 +37,7 @@ function Register() {
       });
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (!res.ok) {
         showHide("error", data.responseText[0]);
       } else {
@@ -45,7 +45,7 @@ function Register() {
         navigate("/login", {replace: true}); // Use navigate for redirection
       }
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   };
   

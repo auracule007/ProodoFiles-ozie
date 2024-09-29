@@ -2,16 +2,16 @@ import React, { useContext, useState } from "react";
 import FilesContext from "../../context/FilesContext";
 
 function ForgotPassword() {
-    const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
+    const { showHide, clientdevurl, devurl } = useContext(FilesContext);
     const [email, setEmail] = useState("");
-    const [url, setUrl] = useState(`${clientProurl}/reset-password`);
+    const [url, setUrl] = useState(`${clientdevurl}/reset-password`);
     const [message, setMessage] = useState("");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       
       try {
-        const response = await fetch(`${produrl}/api/forgot-pass/`, {
+        const response = await fetch(`${devurl}/api/forgot-pass/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -19,9 +19,9 @@ function ForgotPassword() {
           body: JSON.stringify({ email, url }),
         });
         
-        console.log(response)
+        // console.log(response)
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         
         if (!response.ok) {
           showHide("error", data.responseText);
@@ -30,7 +30,7 @@ function ForgotPassword() {
         }
         setMessage(data.responseText);
       } catch (error) {
-        showHide("error", "Error sending password reset link.");
+        // showHide("error", "Error sending password reset link.");
       }
     };
   

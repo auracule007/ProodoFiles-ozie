@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
 import FilesContext from "../context/FilesContext";
+import { FaRecycle } from "react-icons/fa";
+import { TbTagStarred } from "react-icons/tb";
+import { AiOutlineDelete } from "react-icons/ai";
 
 function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
   const { getFolderItems } = useContext(FilesContext);
@@ -30,7 +33,7 @@ function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
           className="bg-red-500 text-white px-2 py-1 rounded"
           aria-label="Delete Folder"
         >
-          Delete
+          <AiOutlineDelete />
         </button>
 
         {/* Binned button */}
@@ -40,7 +43,7 @@ function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
           className="bg-yellow-500 text-white px-2 py-1 rounded"
           aria-label="Move to Bin"
         >
-          Bin
+         <FaRecycle />
         </button>
 
         {/* Starred button */}
@@ -50,7 +53,7 @@ function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
           className="bg-blue-500 text-white px-2 py-1 rounded"
           aria-label="Star Folder"
         >
-          Star
+          <TbTagStarred />
         </button>
       </div>
     </div>

@@ -8,7 +8,7 @@ function useQuery() {
 }
 
 function ResetPassword() {
-  const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
+  const { showHide, devurl, clientdevurl } = useContext(FilesContext);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState("");
@@ -41,7 +41,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await fetch(`${produrl}/api/rest-pswd/`, {
+      const response = await fetch(`${devurl}/api/rest-pswd/`, {
       // const response = await fetch(`http://127.0.0.1:8000/api/rest-pswd/`, {
         method: "POST",
         headers: {

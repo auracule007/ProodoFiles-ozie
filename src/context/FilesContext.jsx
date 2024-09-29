@@ -19,10 +19,10 @@ export const FilesProvider = ({ children }) => {
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  const produrl= "https://proodoosfiles.onrender.com"
-  const devurl = "http://127.0.0.1:8000"
-  const clientProurl = "https://proodo-files-ozie.vercel.app"
-  const clientdevurl = "http://localhost:5173"
+  const devurl= "https://proodoosfiles.onrender.com"
+  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const devurl = "http://127.0.0.1:8000"
+  // const clientdevurl = "http://localhost:5173"
 
   
   useEffect(() => {
@@ -33,7 +33,7 @@ export const FilesProvider = ({ children }) => {
 
   const getFiles = async () => {
     try {
-      const res = await fetch(`${produrl}/api/user-files/`, {
+      const res = await fetch(`${devurl}/api/user-files/`, {
       // const res = await fetch("https://proodoosfiles.onrender.com/api/user-files/", {
         method: "GET",
         headers: {
@@ -42,7 +42,7 @@ export const FilesProvider = ({ children }) => {
         },
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
 
       if (!res.ok) {
         showHide("error", "Unable to get File data");
@@ -51,7 +51,8 @@ export const FilesProvider = ({ children }) => {
         // showHide("success", "File data successfully fetched");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      return showHide("error", "Something went wrong")
     }
   };
 
@@ -61,7 +62,7 @@ export const FilesProvider = ({ children }) => {
         ? { folder_name, parent_folder_id }  // Include parent_folder_id only for subfolders
         : { folder_name };                   // Exclude parent_folder_id for root-level folders
   
-      const res = await fetch(`${produrl}/api/create-f/`, {
+      const res = await fetch(`${devurl}/api/create-f/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -78,7 +79,7 @@ export const FilesProvider = ({ children }) => {
         showHide("success", "Folder created successfully");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       // showHide("error", "An error occurred while creating the folder");
     }
   };
@@ -113,7 +114,7 @@ export const FilesProvider = ({ children }) => {
   
   const getFolders = async () => {
     try {
-      const res = await fetch(`${produrl}/api/get-folders/`, {
+      const res = await fetch(`${devurl}/api/get-folders/`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -121,9 +122,9 @@ export const FilesProvider = ({ children }) => {
         }
       });
   
-      console.log(res)
+      // console.log(res)
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       if (!res.ok) {
         showHide("error", "Failed to create a folder");
       } else {
@@ -131,8 +132,8 @@ export const FilesProvider = ({ children }) => {
         // showHide("success", "Folder created successfully");
       }
     } catch (error) {
-      console.error(error);
-      // showHide("error", "An error occurred while creating the folder");
+      // console.error(error);
+      showHide("error", "An error occurred while creating the folder");
     }
   };
 
@@ -142,7 +143,7 @@ export const FilesProvider = ({ children }) => {
       formData.append("folder_id", folder_id);
       files.forEach(file => formData.append("files", file)); // This will now work
       
-      const res = await fetch(`${produrl}/api/upload_file/`, {
+      const res = await fetch(`${devurl}/api/upload_file/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -151,9 +152,9 @@ export const FilesProvider = ({ children }) => {
         body: formData,
       });
   
-      console.log(res)
+      // console.log(res)
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       if (!res.ok) {
         showHide("error", "Failed to upload files.");
       } else {
@@ -169,35 +170,35 @@ export const FilesProvider = ({ children }) => {
   
   const getFolderItems = async (folderId) => {
     try {
-      const res = await fetch(`${produrl}/api/view_fo/?folder_id=${folderId}`, {
+      const res = await fetch(`${devurl}/api/view_fo/?folder_id=${folderId}`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
           "Content-Type": "application/json",
         },
       });
-      console.log("folder single",res);
+      // console.log("folder single",res);
       const data = await res.json();
-      console.log("folder single", data);
+      // console.log("folder single", data);
       if (!res.ok) {
         showHide("error", "Unable to fetch folder items");
       } else {
         setSubFiles(data.files)
         setSubFolder(data.subfolders)
-        console.log(data.files)
-        console.log(data.subfolders)
+        // console.log(data.files)
+        // console.log(data.subfolders)
         // return data; // Return the folder items
       }
     } catch (error) {
-      console.error(error);
-      // showHide("error", "An error occurred while fetching folder items");
+      // console.error(error);
+      showHide("error", "An error occurred while fetching folder items");
       return [];
     }
   };
   
   const downloadFile = async (file_id) => {
     try {
-      const res = await fetch(`${produrl}/api/download_file/?file_id=${file_id}`, {
+      const res = await fetch(`${devurl}/api/download_file/?file_id=${file_id}`, {
         method: "GET",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
@@ -215,13 +216,13 @@ export const FilesProvider = ({ children }) => {
         window.location.href = res.url; // Follow the redirect to the file download
       } else {
         // If no redirect, it's likely a direct response with file content (depending on your backend)
-        console.log("No redirect occurred, check the response body or status");
+        return showHide("error","No redirect occurred, check the response body or status");
       }
   
       showHide("success", "File is downloading");
     } catch (error) {
-      console.error("Download error:", error);
-      // showHide("error", "An error occurred during download");
+      // console.error("Download error:", error);
+      showHide("error", "An error occurred during download");
     }
   };
 
@@ -229,7 +230,7 @@ export const FilesProvider = ({ children }) => {
   const deleteFolder = async (folder_id) => {
     if(window.confirm("Are you sure you want to delete?..")){
       try {
-        const res = await fetch(`${produrl}/api/fo/del/`, {
+        const res = await fetch(`${devurl}/api/fo/del/`, {
           method: "POST",
           headers:{
             "Authorization": `Token ${getItem("token")}`,
@@ -238,9 +239,9 @@ export const FilesProvider = ({ children }) => {
           body: JSON.stringify({ folder_id })
         })
         const data = await res.json();
-        console.log(data)
-        console.log(folder_id)
-        console.log(res)
+        // console.log(data)
+        // console.log(folder_id)
+        // console.log(res)
         if(!res.ok){
           showHide("error", data.responseText)
         }else{
@@ -256,7 +257,7 @@ export const FilesProvider = ({ children }) => {
 
     const binFolder = async (folderId) => {
       try {
-        const res = await fetch(`${produrl}/api/fo/bin/`, {
+        const res = await fetch(`${devurl}/api/fo/bin/`, {
           method: 'POST',
           headers: {
             "Authorization": `Token ${getItem("token")}`,
@@ -265,14 +266,14 @@ export const FilesProvider = ({ children }) => {
           body: JSON.stringify({ folder_id: folderId })
         });
     
-        const data = await response.json();
+        const data = await res.json();
         if(!res.ok){
           showHide("errpr", data.responseText)
         }else{
           setBinned(data);
           showHide("success", data.responseText)
         }
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -280,7 +281,7 @@ export const FilesProvider = ({ children }) => {
 
     const starredFolder = async (folderId) => {
       try {
-        const response = await fetch(`${produrl}/api/fo/star/`, {
+        const response = await fetch(`${devurl}/api/fo/star/`, {
           method: 'POST',
           headers: {
             "Authorization": `Token ${getItem("token")}`,
@@ -290,8 +291,8 @@ export const FilesProvider = ({ children }) => {
         });
     
         const data = await response.json();
-        console.log(data);
-        console.log(response);
+        // console.log(data);
+        // console.log(response);
         
         if(!response.ok){
           showHide("error", data.responseText)
@@ -299,7 +300,7 @@ export const FilesProvider = ({ children }) => {
           setStarred(data)
           showHide("success", data.responseText)
         }
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -346,9 +347,9 @@ export const FilesProvider = ({ children }) => {
         deleteFolder,
         binFolder,
         starredFolder,
-        produrl, 
-        produrl, 
-        clientProurl, 
+        devurl, 
+        // devurl, 
+        // clientProurl, 
         clientdevurl,
       }}
     >
