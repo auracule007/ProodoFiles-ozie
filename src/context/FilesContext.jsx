@@ -11,6 +11,7 @@ export const FilesProvider = ({ children }) => {
   const { alertInfo, showHide } = useAlert();
   const [files, setFiles] = useState([]);
   const [folder, setFolder] = useState([]);
+  const [allfolder, setAllFolder] = useState([]);
   const [subfolder, setSubFolder] = useState([]);
   const [subfiles, setSubFiles] = useState([]);
   const [uploads, setUploads] = useState([]);
@@ -28,6 +29,7 @@ export const FilesProvider = ({ children }) => {
   useEffect(() => {
     getFiles()
     getFolders()
+    getAllFolders()
   }, []);
   // }, [folder, files]);
 
@@ -58,31 +60,36 @@ export const FilesProvider = ({ children }) => {
 
   const createFolder = async (folder_name, parent_folder_id = null) => {
     try {
-      const body = parent_folder_id
-        ? { folder_name, parent_folder_id }  // Include parent_folder_id only for subfolders
-        : { folder_name };                   // Exclude parent_folder_id for root-level folders
-  
       const res = await fetch(`${devurl}/api/create-f/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ 
+          folder_name, 
+          parent_folder_id: parent_folder_id || null  // Pass null if root-level
+        }), 
       });
   
+      console.log(res);
       const data = await res.json();
+      console.log(data);
+  
       if (!res.ok) {
-        showHide("error", "Failed to create a folder");
+        showHide("error", "Failed to create folder");
       } else {
-        setFolder(prevFolders => [...prevFolders, data]); // Update folder list
+        setFolder(prevFolders => [...prevFolders, data]);  // Update folder list with new folder
+        // setFolder(prevFolders => [...prevFolders, data]);  // Update folder list with new folder
+        // setSubFolder(prevsubFolders => [...prevsubFolders, data]);  // Update folder list with new folder
         showHide("success", "Folder created successfully");
       }
     } catch (error) {
-      // console.error(error);
-      // showHide("error", "An error occurred while creating the folder");
+      console.error(error);
+      showHide("error", "An error occurred while creating the folder");
     }
   };
+  
   
 
   // const createFolder = async (folder_name, parent_folder_id) => {
@@ -124,12 +131,34 @@ export const FilesProvider = ({ children }) => {
   
       // console.log(res)
       const data = await res.json();
-      // console.log(data)
+      console.log(data)
       if (!res.ok) {
         showHide("error", "Failed to create a folder");
       } else {
         setFolder(data); // Add new folder to the state
-        // showHide("success", "Folder created successfully");
+      }
+    } catch (error) {
+      // console.error(error);
+      showHide("error", "An error occurred while creating the folder");
+    }
+  };
+  const getAllFolders = async () => {
+    try {
+      const res = await fetch(`${devurl}/api/all-folders/`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        }
+      });
+  
+      // console.log(res)
+      const data = await res.json();
+      console.log(data)
+      if (!res.ok) {
+        showHide("error", "Failed to create a folder");
+      } else {
+        setAllFolder(data); // Add new folder to the state
       }
     } catch (error) {
       // console.error(error);
@@ -177,9 +206,9 @@ export const FilesProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-      // console.log("folder single",res);
+      console.log("folder single",res);
       const data = await res.json();
-      // console.log("folder single", data);
+      console.log("folder single", data);
       if (!res.ok) {
         showHide("error", "Unable to fetch folder items");
       } else {
@@ -349,7 +378,7 @@ export const FilesProvider = ({ children }) => {
         starredFolder,
         devurl, 
         // devurl, 
-        // clientProurl, 
+        allfolder, 
         clientdevurl,
       }}
     >

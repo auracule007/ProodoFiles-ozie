@@ -3,8 +3,9 @@ import DocumentItems from './DocumentItems';
 import FilesContext from '../context/FilesContext';
 import FolderItems from './FolderItems';
 
-function FolderFiles() {
+function FolderFiles({ handleFolderClick }) {
   const { files, subfolder, subfiles } = useContext(FilesContext);
+  // const { files, subfolder, subfiles } = useContext(FilesContext);
 
   return (
     <div>

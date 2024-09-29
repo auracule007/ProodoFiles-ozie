@@ -3,7 +3,7 @@ import Card from "../shared/Card";
 import FilesContext from "../../context/FilesContext";
 
 function Uploads() {
-  const { isAuthenticated, folder, createFolder, uploadFiles } = useContext(FilesContext);
+  const { isAuthenticated, folder, allfolder, createFolder, uploadFiles } = useContext(FilesContext);
   const [folderName, setFolderName] = useState(""); // State for new folder name
   const [selectedFiles, setSelectedFiles] = useState([]); // State for selected files
   const [selectedFolder, setSelectedFolder] = useState(""); // State for selected folder ID
@@ -67,7 +67,7 @@ function Uploads() {
                   onChange={(e) => setSelectedFolder(e.target.value)} // Handle folder selection
                 >
                   <option value="">Select a folder</option>
-                  {folder.map((items) => (
+                  {allfolder.map((items) => (
                     <option key={items.id} value={items.id}>
                       {items.name}
                     </option>

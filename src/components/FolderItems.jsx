@@ -4,11 +4,14 @@ import { FaRecycle } from "react-icons/fa";
 import { TbTagStarred } from "react-icons/tb";
 import { AiOutlineDelete } from "react-icons/ai";
 
-function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
+function FolderItems({ folder, handledelete, handleFolderClick, handleBinned, handleStarred }) {
   const { getFolderItems } = useContext(FilesContext);
 
   const handleClick = () => {
+    {console.log("folderitem",folder.id)}
+
     getFolderItems(folder.id);  // Load contents when folder is clicked
+    handleFolderClick(folder.id);
   };
 
   return (
@@ -29,7 +32,7 @@ function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
         {/* Delete button */}
         <button 
           type="button" 
-          onClick={() => handledelete(folder?.id)} 
+          onClick={() => handledelete(folder.id)} 
           className="bg-red-500 text-white px-2 py-1 rounded"
           aria-label="Delete Folder"
         >
@@ -61,6 +64,66 @@ function FolderItems({ folder, handledelete, handleBinned, handleStarred }) {
 }
 
 export default FolderItems;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import React, { useContext } from "react";
 // import FilesContext from "../context/FilesContext";

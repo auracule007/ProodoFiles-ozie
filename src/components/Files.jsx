@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
-import FileItems from './FileItems';
-import FilesContext from '../context/FilesContext';
-
+import React, { useContext, useState, useEffect } from "react";
+import FileItems from "./FileItems";
+import FilesContext from "../context/FilesContext";
 
 function Files() {
-    const { files } = useContext(FilesContext);
+  const { files } = useContext(FilesContext);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
@@ -38,13 +38,21 @@ function Files() {
 
       {/* Pagination controls */}
       <div className="pagination-controls flex flex-wrap items-center gap-2 justify-center">
-        <button onClick={prevPage} className="bg-red-300 w-[10%] p-1 text-xs rounded-lg"  disabled={currentPage === 1}>
+        <button
+          onClick={prevPage}
+          className="bg-red-300 w-[10%] p-1 text-xs rounded-lg"
+          disabled={currentPage === 1}
+        >
           Previous
         </button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button onClick={nextPage} className="bg-green-300 w-[10%] p-1 text-xs rounded-lg" disabled={currentPage === totalPages}>
+        <button
+          onClick={nextPage}
+          className="bg-green-300 w-[10%] p-1 text-xs rounded-lg"
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

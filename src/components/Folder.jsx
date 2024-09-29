@@ -66,13 +66,14 @@ const Folder = () => {
             <Card
               key={file.id}
               className="md:p-2 cursor-pointer"
-              onClick={() => handleFolderClick(file.id)}  // Set this folder as the parent for subfolders
+              // onClick={() => handleFolderClick(file.id)}  // Set this folder as the parent for subfolders
             >
               <FolderItems
                 folder={file}
                 handleBinned={handleBinned}
                 handleStarred={handleStarred}
                 handledelete={handleDelete}
+                handleFolderClick={handleFolderClick}
               />
             </Card>
           ))
@@ -90,6 +91,40 @@ const Folder = () => {
 
 
 export default Folder;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
