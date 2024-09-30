@@ -20,16 +20,17 @@ export const FilesProvider = ({ children }) => {
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  const devurl= "https://proodoosfiles.onrender.com"
-  const clientdevurl = "https://proodo-files-ozie.vercel.app"
-  // const devurl = "http://127.0.0.1:8000"
-  // const clientdevurl = "http://localhost:5173"
+  // const devurl= "https://proodoosfiles.onrender.com"
+  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  const devurl = "http://127.0.0.1:8000"
+  const clientdevurl = "http://localhost:5173"
 
   
   useEffect(() => {
     getFiles()
     getFolders()
     getAllFolders()
+    viewBin()
   }, []);
   // }, [folder, files]);
 
@@ -336,27 +337,61 @@ export const FilesProvider = ({ children }) => {
     };
     
     
-  
+  const viewBin = async() => {
+    try{
+      const res = await fetch(`${devurl}/api/binned-f/`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${getItem("token")}`,
+          'Content-Type': 'application/json',
+        }
+      })
 
-  // const downloadFile = async (file_id) => {
-  //   try {
-  //     const res = await fetch(`https://proodoosfiles.onrender.com/api/download_file/?file_id=${file_id}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: `Token ${getItem('token')}`, // Assuming you are using token-based authentication
-  //       },
-  //     });
-  //     const data = await res.json();
-  //     if (res.ok) {
-  //       // Automatically trigger the download by redirecting to the download URL
-  //       window.location.href = data.download_url;
-  //     } else {
-  //       console.error('Download failed:', data.responseText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error downloading the file:', error);
-  //   }
-  // };
+      const data = await res.json();
+      console.log(data)
+      if(!res.ok){
+        showHide("error", data.details)
+      }else{
+        // showHide("success", )
+        setBinned(data)
+        // setBinned(data.binned_folders && data.binned_files)
+      }
+    }catch{
+        console.log(error)
+    }
+  }
+
+
+  const renameFolder = async (folder_id, new_name, override = true) => {
+    try {
+      const res = await fetch(`${devurl}/api/folder/rename`, {  // Replace with your actual API endpoint
+        method: "POST",
+        headers: {
+          "Authorization": `Token ${getItem("token")}`,  // Replace getItem with your token retrieval function
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ folder_id, override, new_name }),
+      });
+  
+      // Handle empty or incorrect JSON response
+      if (!res.ok) {
+        const errorData = await res.json();
+        showHide("error", errorData.responseText);
+        return;
+      }
+  
+      // Safely parse response
+      const data = await res.json();
+      setFolder((prev) =>
+        prev.map((f) => (f.id === folder_id ? { ...f, name: new_name } : f))
+      );
+      showHide("success", data.responseText);
+    } catch (error) {
+      console.error(error);
+      showHide("error", "An unexpected error occurred.");
+    }
+  };
+  
 
   return (
     <FilesContext.Provider
@@ -380,6 +415,11 @@ export const FilesProvider = ({ children }) => {
         // devurl, 
         allfolder, 
         clientdevurl,
+        viewBin,
+        binned,
+        setBinned,
+        renameFolder,
+
       }}
     >
       {children}
@@ -388,3 +428,93 @@ export const FilesProvider = ({ children }) => {
 };
 
 export default FilesContext;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const downloadFile = async (file_id) => {
+  //   try {
+  //     const res = await fetch(`https://proodoosfiles.onrender.com/api/download_file/?file_id=${file_id}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: `Token ${getItem('token')}`, // Assuming you are using token-based authentication
+  //       },
+  //     });
+  //     const data = await res.json();
+  //     if (res.ok) {
+  //       // Automatically trigger the download by redirecting to the download URL
+  //       window.location.href = data.download_url;
+  //     } else {
+  //       console.error('Download failed:', data.responseText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error downloading the file:', error);
+  //   }
+  // };

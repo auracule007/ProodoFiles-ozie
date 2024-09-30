@@ -71,14 +71,14 @@ function Sidebar({ setComponent }) {
               <IoFolderSharp /> Folders
               </div>
             </li>
-            <li
+            {/* <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("downloads")}
             >
               <div className="flex justify-start items-center gap-2">
                 <IoMdDownload /> Downloads
               </div>
-            </li>
+            </li> */}
             {/* <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("starred")}
@@ -87,14 +87,14 @@ function Sidebar({ setComponent }) {
               <FaStarOfLife /> Starred 
               </div>
             </li> */}
-            {/* <li
+            <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("bin")}
             >
               <div className="flex justify-start items-center gap-2">
-              <RiDeleteBinLine /> Bin 
+              <RiDeleteBinLine /> Recycle Bin 
               </div>
-            </li> */}
+            </li>
             <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("uploads")}
