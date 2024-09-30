@@ -20,10 +20,10 @@ export const FilesProvider = ({ children }) => {
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  // const devurl= "https://proodoosfiles.onrender.com"
-  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
-  const devurl = "http://127.0.0.1:8000"
-  const clientdevurl = "http://localhost:5173"
+  const devurl= "https://proodoosfiles.onrender.com"
+  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const devurl = "http://127.0.0.1:8000"
+  // const clientdevurl = "http://localhost:5173"
 
   
   useEffect(() => {
