@@ -24,7 +24,7 @@ function FolderItems({
   };
 
   const handleRenameSubmit = () => {
-    handleRename(folder.id, newFolderName);
+    handleRename(folder.id, newFolderName);  // Pass new folder name to handler
     setIsRenaming(false);  // Close the renaming input
   };
 
@@ -42,16 +42,22 @@ function FolderItems({
               {folder?.name}
             </h2>
           ) : (
-            <div>
+            <div className="flex items-center justify-center gap-2">
               <input
                 type="text"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                className="border p-1"
+                className="border w-full p-1 text-[10px] rounded-md"
+                style={{
+                  width: "100%",
+                  maxWidth: "120px", // Ensures the input fits within the parent
+                  overflow: "hidden",
+                  textOverflow: "ellipsis"
+                }}
               />
               <button
                 type="button"
-                className="bg-green-500 text-white px-2 py-1 rounded"
+                className="bg-green-500 text-white text-[10px] px-2 py-1 rounded"
                 onClick={handleRenameSubmit}
               >
                 Save
@@ -61,7 +67,6 @@ function FolderItems({
         </div>
       </div>
 
-      {/* Render buttons only if not in FolderBin */}
       {!isFolderBin && (
         <div className="flex justify-between mt-2">
           <button

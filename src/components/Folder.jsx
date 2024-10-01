@@ -35,7 +35,7 @@ const Folder = () => {
   };
 
   const handleRename = (folderId, newName) => {
-    renameFolder(folderId, newName);
+    renameFolder(folderId, newName);  // Call rename API method with folderId and newName
   };
 
   return (
@@ -83,6 +83,7 @@ const Folder = () => {
 };
 
 export default Folder;
+
 
 
 

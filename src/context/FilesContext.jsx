@@ -31,8 +31,8 @@ export const FilesProvider = ({ children }) => {
     getFolders()
     getAllFolders()
     viewBin()
-  }, []);
-  // }, [folder, files]);
+  // }, []);
+  }, [folder, files]);
 
   const getFiles = async () => {
     try {
@@ -361,36 +361,34 @@ export const FilesProvider = ({ children }) => {
     }
   }
 
-
-  const renameFolder = async (folder_id, new_name, override = true) => {
+  const renameFolder = async (folder_id, new_name) => {
     try {
-      const res = await fetch(`${devurl}/api/folder/rename`, {  // Replace with your actual API endpoint
+      const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
         method: "POST",
         headers: {
           "Authorization": `Token ${getItem("token")}`,  // Replace getItem with your token retrieval function
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ folder_id, override, new_name }),
+        body: JSON.stringify({ folder_id, new_name }),
       });
   
-      // Handle empty or incorrect JSON response
       if (!res.ok) {
         const errorData = await res.json();
-        showHide("error", errorData.responseText);
+        showHide("error", errorData.detail || "Failed to rename folder");
         return;
       }
   
-      // Safely parse response
       const data = await res.json();
       setFolder((prev) =>
         prev.map((f) => (f.id === folder_id ? { ...f, name: new_name } : f))
       );
-      showHide("success", data.responseText);
+      showHide("success", data.detail || "Folder renamed successfully");
     } catch (error) {
       console.error(error);
       showHide("error", "An unexpected error occurred.");
     }
   };
+  
   
 
   return (
