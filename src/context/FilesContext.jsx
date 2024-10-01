@@ -31,8 +31,8 @@ export const FilesProvider = ({ children }) => {
     getFolders()
     getAllFolders()
     viewBin()
-  // }, []);
-  }, [folder, files]);
+  }, []);
+  // }, [folder, files]);
 
   const getFiles = async () => {
     try {
@@ -363,6 +363,7 @@ export const FilesProvider = ({ children }) => {
 
   const renameFolder = async (folder_id, new_name) => {
     try {
+      // const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {  // Replace with your actual API endpoint
       const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
         method: "POST",
         headers: {
