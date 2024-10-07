@@ -4,6 +4,8 @@ import { FaRecycle } from "react-icons/fa";
 import { TbTagStarred } from "react-icons/tb";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+import { MdFolderZip } from "react-icons/md";
+import { CiShare1 } from "react-icons/ci";
 
 function FolderItems({
   folder,
@@ -14,7 +16,7 @@ function FolderItems({
   handleRename, // New handler for renaming
   isFolderBin = false
 }) {
-  const { getFolderItems } = useContext(FilesContext);
+  const { getFolderItems, zipFolder } = useContext(FilesContext);
   const [isRenaming, setIsRenaming] = useState(false);  // To track renaming state
   const [newFolderName, setNewFolderName] = useState(folder?.name);  // For renaming input
 
@@ -28,14 +30,29 @@ function FolderItems({
     setIsRenaming(false);  // Close the renaming input
   };
 
+  const handleZipFolder =  () => {
+    // console.log("zipped")
+    zipFolder(folder.id)
+  }
+  const handleSharedFolder =  () => {
+    // console.log("zipped")
+    sharedFolder(folder.id)
+  }
+
   return (
-    <div className="w-full h-full p-2 border rounded-md shadow-md">
-      <div onClick={handleClick} className="cursor-pointer">
+    <div className="w-full h-full p-2 border rounded-md shadow-md z-10">
+      <div onClick={handleClick} className="cursor-pointer z-10 relative">
         <img
           src="/img/folder5.png"
-          className="md:w-full md:h-48 object-cover"
+          className="md:w-full relative z-0 md:h-48 object-cover"
           alt={`${folder?.name} thumbnail`}
         />
+        <button className="absolute top-0 left-[85%] z-10" onClick={handleZipFolder} type="button">
+            <MdFolderZip className="text-xl"  />
+        </button>
+        <button className="absolute top-0 left-[60%] z-10" onClick={handleSharedFolder} type="button">
+        <CiShare1 className="text-xl"  />
+        </button>
         <div className="md:pt-2">
           {!isRenaming ? (
             <h2 className="text-start flex flex-wrap items-center text-[10px] justify-center gap-2">

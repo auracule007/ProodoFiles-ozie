@@ -52,6 +52,9 @@ function Dashboard() {
            component === "uploads" ? (
             <Uploads />
           ) : 
+           component === "starred" ? (
+            <Starred />
+          ) : 
            component === "bin" ? (
             <FolderBin />
           ) : (

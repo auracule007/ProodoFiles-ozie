@@ -29,10 +29,7 @@ function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log(res);
       const data = await res.json();
-      console.log(data);
-      console.log(data.responseText);
       if (!res.ok) {
         showHide("error", data.responseText);
       } else {

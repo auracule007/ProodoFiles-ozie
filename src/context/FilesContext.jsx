@@ -16,46 +16,46 @@ export const FilesProvider = ({ children }) => {
   const [subfiles, setSubFiles] = useState([]);
   const [uploads, setUploads] = useState([]);
   const [binned, setBinned] = useState([]);
+  const [zipped, setZipped] = useState([]);
+  const [shared, setShared] = useState([]);
   const [starred, setStarred] = useState([]);
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
   const devurl= "https://proodoosfiles.onrender.com"
   const clientdevurl = "https://proodo-files-ozie.vercel.app"
-  // const devurl = "http://127.0.0.1:8000"
-  // const clientdevurl = "http://localhost:5173"
+  // const devurl = "http://127.0.0.1:8000";
+  // const clientdevurl = "http://localhost:5173";
 
-  
   useEffect(() => {
-    getFiles()
-    getFolders()
-    getAllFolders()
-    viewBin()
-  }, []);
-  // }, [folder, files]);
+    if (isAuthenticated) {
+      getFiles();
+      getFolders();
+      getAllFolders();
+      viewBin();
+      viewStarredFolders();
+    }
+    // }, []);
+  }, [folder, files]);
 
   const getFiles = async () => {
     try {
       const res = await fetch(`${devurl}/api/user-files/`, {
-      // const res = await fetch("https://proodoosfiles.onrender.com/api/user-files/", {
+        // const res = await fetch("https://proodoosfiles.onrender.com/api/user-files/", {
         method: "GET",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
+          Authorization: `Token ${getItem("token")}`,
           "Content-Type": "applications/json",
         },
       });
       const data = await res.json();
-      // console.log(data);
-
       if (!res.ok) {
         showHide("error", "Unable to get File data");
       } else {
         setFiles(data);
-        // showHide("success", "File data successfully fetched");
       }
     } catch (error) {
-      // console.log(error);
-      return showHide("error", "Something went wrong")
+      return showHide("error", "Something went wrong");
     }
   };
 
@@ -64,25 +64,23 @@ export const FilesProvider = ({ children }) => {
       const res = await fetch(`${devurl}/api/create-f/`, {
         method: "POST",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
+          Authorization: `Token ${getItem("token")}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          folder_name, 
-          parent_folder_id: parent_folder_id || null  // Pass null if root-level
-        }), 
+        body: JSON.stringify({
+          folder_name,
+          parent_folder_id: parent_folder_id || null, // Pass null if root-level
+        }),
       });
-  
-      console.log(res);
+
+      // console.log(res);
       const data = await res.json();
-      console.log(data);
-  
+      // console.log(data);
+
       if (!res.ok) {
         showHide("error", "Failed to create folder");
       } else {
-        setFolder(prevFolders => [...prevFolders, data]);  // Update folder list with new folder
-        // setFolder(prevFolders => [...prevFolders, data]);  // Update folder list with new folder
-        // setSubFolder(prevsubFolders => [...prevsubFolders, data]);  // Update folder list with new folder
+        setFolder([...folder, ...data]);
         showHide("success", "Folder created successfully");
       }
     } catch (error) {
@@ -90,49 +88,18 @@ export const FilesProvider = ({ children }) => {
       showHide("error", "An error occurred while creating the folder");
     }
   };
-  
-  
 
-  // const createFolder = async (folder_name, parent_folder_id) => {
-  //   try {
-  //     const res = await fetch("https://proodoosfiles.onrender.com/api/create-f/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Authorization": `Token ${getItem("token")}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ folder_name, parent_folder_id }), // Pass folder name in the request body
-  //     });
-  //     console.log("parent_folder_id",parent_folder_id);
-      
-  //     console.log(res)
-  //     const data = await res.json();
-  //     console.log(data)
-  //     if (!res.ok) {
-  //       showHide("error", "Failed to create a folder");
-  //     } else {
-  //       setFolder(prevFolders => [...prevFolders, data]); // Add new folder to the state
-  //       showHide("success", "Folder created successfully");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     showHide("error", "An error occurred while creating the folder");
-  //   }
-  // };
-  
   const getFolders = async () => {
     try {
       const res = await fetch(`${devurl}/api/get-folders/`, {
         method: "GET",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
+          Authorization: `Token ${getItem("token")}`,
           "Content-Type": "application/json",
-        }
+        },
       });
-  
-      // console.log(res)
       const data = await res.json();
-      console.log(data)
+      // console.log(data);
       if (!res.ok) {
         showHide("error", "Failed to create a folder");
       } else {
@@ -140,7 +107,7 @@ export const FilesProvider = ({ children }) => {
       }
     } catch (error) {
       // console.error(error);
-      showHide("error", "An error occurred while creating the folder");
+      // showHide("error", "An error occurred while creating the folder");
     }
   };
   const getAllFolders = async () => {
@@ -148,21 +115,18 @@ export const FilesProvider = ({ children }) => {
       const res = await fetch(`${devurl}/api/all-folders/`, {
         method: "GET",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
+          Authorization: `Token ${getItem("token")}`,
           "Content-Type": "application/json",
-        }
+        },
       });
-  
-      // console.log(res)
       const data = await res.json();
-      console.log(data)
+      // console.log(data);
       if (!res.ok) {
         showHide("error", "Failed to create a folder");
       } else {
-        setAllFolder(data); // Add new folder to the state
+        setAllFolder(data);
       }
     } catch (error) {
-      // console.error(error);
       showHide("error", "An error occurred while creating the folder");
     }
   };
@@ -171,254 +135,330 @@ export const FilesProvider = ({ children }) => {
     try {
       const formData = new FormData();
       formData.append("folder_id", folder_id);
-      files.forEach(file => formData.append("files", file)); // This will now work
-      
+      files.forEach((file) => formData.append("files", file)); // This will now work
+
       const res = await fetch(`${devurl}/api/upload_file/`, {
         method: "POST",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
-          // No need for 'Content-Type' header, since FormData sets the boundary automatically.
+          Authorization: `Token ${getItem("token")}`,
         },
         body: formData,
       });
-  
+
       // console.log(res)
       const data = await res.json();
-      // console.log(data)
       if (!res.ok) {
         showHide("error", "Failed to upload files.");
       } else {
         showHide("success", "Files uploaded successfully.");
-        setUploads([...uploads, data]);
+        setUploads([...uploads, ...data]);
       }
     } catch (error) {
       console.log(error);
-      // showHide("error", "An error occurred while uploading files.");
     }
   };
-  
-  
+
   const getFolderItems = async (folderId) => {
     try {
       const res = await fetch(`${devurl}/api/view_fo/?folder_id=${folderId}`, {
         method: "GET",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
+          Authorization: `Token ${getItem("token")}`,
           "Content-Type": "application/json",
         },
       });
-      console.log("folder single",res);
+      // console.log("folder single", res);
       const data = await res.json();
-      console.log("folder single", data);
+      // console.log("folder single", data);
       if (!res.ok) {
         showHide("error", "Unable to fetch folder items");
       } else {
-        setSubFiles(data.files)
-        setSubFolder(data.subfolders)
-        // console.log(data.files)
-        // console.log(data.subfolders)
-        // return data; // Return the folder items
+        setSubFiles(data.files);
+        setSubFolder(data.subfolders);
+        setFolder([...data, ...folder]);
       }
     } catch (error) {
-      // console.error(error);
       showHide("error", "An error occurred while fetching folder items");
       return [];
     }
   };
-  
+
   const downloadFile = async (file_id) => {
     try {
-      const res = await fetch(`${devurl}/api/download_file/?file_id=${file_id}`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Token ${getItem("token")}`,
-        },
-      });
-  
+      const res = await fetch(
+        `${devurl}/api/download_file/?file_id=${file_id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${getItem("token")}`,
+          },
+        }
+      );
+
       if (!res.ok) {
-        const errorData = await res.json(); // This is for error response
+        const errorData = await res.json();
         showHide("error", errorData.responseText || "Download failed");
         return;
       }
-  
-      // Handle the redirect
       if (res.redirected) {
-        window.location.href = res.url; // Follow the redirect to the file download
+        window.location.href = res.url;
       } else {
-        // If no redirect, it's likely a direct response with file content (depending on your backend)
-        return showHide("error","No redirect occurred, check the response body or status");
+        return showHide(
+          "error",
+          "No redirect occurred, check the response body or status"
+        );
       }
-  
+
       showHide("success", "File is downloading");
     } catch (error) {
-      // console.error("Download error:", error);
       showHide("error", "An error occurred during download");
     }
   };
 
-
   const deleteFolder = async (folder_id) => {
-    if(window.confirm("Are you sure you want to delete?..")){
+    if (window.confirm("Are you sure you want to delete?..")) {
       try {
         const res = await fetch(`${devurl}/api/fo/del/`, {
           method: "POST",
-          headers:{
-            "Authorization": `Token ${getItem("token")}`,
-            "Content-Type": "application/json"
+          headers: {
+            Authorization: `Token ${getItem("token")}`,
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ folder_id })
-        })
+          body: JSON.stringify({ folder_id }),
+        });
         const data = await res.json();
-        // console.log(data)
-        // console.log(folder_id)
-        // console.log(res)
-        if(!res.ok){
-          showHide("error", data.responseText)
-        }else{
-          setFolder(data)
-          showHide("success", data.responseText)
+        if (!res.ok) {
+          showHide("error", data.responseText);
+        } else {
+          setFolder([...data, folder_id]);
+          showHide("success", data.responseText);
         }
       } catch (error) {
-        console.log(error)
-      }
+        console.log(error);
       }
     }
+  };
 
+  const binFolder = async (folderId) => {
+    try {
+      const res = await fetch(`${devurl}/api/fo/bin/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ folder_id: folderId }),
+      });
 
-    const binFolder = async (folderId) => {
-      try {
-        const res = await fetch(`${devurl}/api/fo/bin/`, {
-          method: 'POST',
-          headers: {
-            "Authorization": `Token ${getItem("token")}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ folder_id: folderId })
-        });
-    
-        const data = await res.json();
-        if(!res.ok){
-          showHide("errpr", data.responseText)
-        }else{
-          setBinned(data);
-          showHide("success", data.responseText)
-        }
-        // console.log(data);
-      } catch (error) {
-        console.error('Error:', error);
+      const data = await res.json();
+      if (!res.ok) {
+        showHide("errpr", data.responseText);
+      } else {
+        setBinned([...data, ...binned]);
+        showHide("success", data.responseText);
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-    const starredFolder = async (folderId) => {
-      try {
-        const response = await fetch(`${devurl}/api/fo/star/`, {
-          method: 'POST',
-          headers: {
-            "Authorization": `Token ${getItem("token")}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ folder_id: folderId })
-        });
-    
-        const data = await response.json();
-        // console.log(data);
-        // console.log(response);
-        
-        if(!response.ok){
-          showHide("error", data.responseText)
-        }else{
-          setStarred(data)
-          showHide("success", data.responseText)
-        }
-        // console.log(data);
-      } catch (error) {
-        console.error('Error:', error);
+  const starredFolder = async (folderId) => {
+    try {
+      const response = await fetch(`${devurl}/api/fo/star/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ folder_id: folderId }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        showHide("error", data.responseText);
+      } else {
+        setStarred(data);
+        showHide("success", data.responseText);
       }
-    };
-    
-    
-  const viewBin = async() => {
-    try{
+      // console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const viewBin = async () => {
+    try {
       const res = await fetch(`${devurl}/api/binned-f/`, {
         method: "GET",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,
-          'Content-Type': 'application/json',
-        }
-      })
+          Authorization: `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await res.json();
-      console.log(data)
-      if(!res.ok){
-        showHide("error", data.details)
-      }else{
-        // showHide("success", )
-        setBinned(data)
-        // setBinned(data.binned_folders && data.binned_files)
+      // console.log(data);
+      if (!res.ok) {
+        showHide("error", data.details);
+      } else {
+        setBinned(data);
       }
-    }catch{
-        console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const renameFolder = async (folder_id, new_name) => {
     try {
-      // const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {  // Replace with your actual API endpoint
-      const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
+      // const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {
+        const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
         method: "POST",
         headers: {
-          "Authorization": `Token ${getItem("token")}`,  // Replace getItem with your token retrieval function
+          Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ folder_id, new_name }),
       });
-  
+
       if (!res.ok) {
         const errorData = await res.json();
         showHide("error", errorData.detail || "Failed to rename folder");
         return;
       }
-  
+
       const data = await res.json();
       setFolder((prev) =>
         prev.map((f) => (f.id === folder_id ? { ...f, name: new_name } : f))
       );
       showHide("success", data.detail || "Folder renamed successfully");
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       showHide("error", "An unexpected error occurred.");
     }
   };
-  
-  
+
+  const renameFile = async (file_id, new_name) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
+        // const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file_id, new_name }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        showHide("error", errorData.detail || "Failed to rename folder");
+        return;
+      }
+
+      const data = await res.json();
+      setFolder((prev) =>
+        prev.map((f) => (f.id === file_id ? { ...f, name: new_name } : f))
+      );
+      showHide("success", data.detail || "Folder renamed successfully");
+    } catch (error) {
+      // console.error(error);
+      showHide("error", "An unexpected error occurred.");
+    }
+  };
+
+  const viewStarredFolders = async () => {
+    try {
+      const res = await fetch(`${devurl}/api/starred-f/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showHide("error", data.responseText);
+      } else {
+        setStarred(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const zipFolder = async (folder_id) => {
+    try {
+      const res = await fetch(`${devurl}/api/fo/zip/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ folder_id }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showHide("error", data.responseText);
+      } else {
+        setZipped([...data, folder_id]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const sharedFolder = async (folder_id) => {
+    try {
+      const res = await fetch(`${devurl}/api/fo/sharing/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ folder_id }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showHide("error", data.responseText);
+      } else {
+        setShared([...data, folder_id]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <FilesContext.Provider
       value={{
         alertInfo,
-        showHide,
         files,
         isAuthenticated,
-        createFolder,
         folder,
+        showHide,
+        createFolder,
         uploadFiles,
         getFolderItems,
         uploads,
         subfolder,
         subfiles,
+        starred,
+        devurl,
         downloadFile,
         deleteFolder,
-        binFolder,
         starredFolder,
-        devurl, 
-        // devurl, 
-        allfolder, 
+        binFolder,
+        allfolder,
         clientdevurl,
-        viewBin,
         binned,
+        shared,
+        zipped,
+        viewBin,
         setBinned,
         renameFolder,
-
+        renameFile,
+        zipFolder,
+        sharedFolder,
       }}
     >
       {children}
@@ -428,92 +468,22 @@ export const FilesProvider = ({ children }) => {
 
 export default FilesContext;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const downloadFile = async (file_id) => {
-  //   try {
-  //     const res = await fetch(`https://proodoosfiles.onrender.com/api/download_file/?file_id=${file_id}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: `Token ${getItem('token')}`, // Assuming you are using token-based authentication
-  //       },
-  //     });
-  //     const data = await res.json();
-  //     if (res.ok) {
-  //       // Automatically trigger the download by redirecting to the download URL
-  //       window.location.href = data.download_url;
-  //     } else {
-  //       console.error('Download failed:', data.responseText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error downloading the file:', error);
-  //   }
-  // };
+//   try {
+//     const res = await fetch(`https://proodoosfiles.onrender.com/api/download_file/?file_id=${file_id}`, {
+//       method: 'GET',
+//       headers: {
+//         Authorization: `Token ${getItem('token')}`, // Assuming you are using token-based authentication
+//       },
+//     });
+//     const data = await res.json();
+//     if (res.ok) {
+//       // Automatically trigger the download by redirecting to the download URL
+//       window.location.href = data.download_url;
+//     } else {
+//       console.error('Download failed:', data.responseText);
+//     }
+//   } catch (error) {
+//     console.error('Error downloading the file:', error);
+//   }
+// };

@@ -35,7 +35,7 @@ function Sidebar({ setComponent }) {
   }
 
   return (
-    <div className="relative h-screen">
+    <div className="relative z-50 h-screen">
       {/* Sidebar */}
       <div
         className={`h-full w-64 bg-[#fff] text-white shadow-lg transition-transform duration-300 ease-in-out ${
@@ -79,14 +79,14 @@ function Sidebar({ setComponent }) {
                 <IoMdDownload /> Downloads
               </div>
             </li> */}
-            {/* <li
+            <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("starred")}
             >
               <div className="flex justify-start items-center gap-2">
               <FaStarOfLife /> Starred 
               </div>
-            </li> */}
+            </li>
             <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("bin")}

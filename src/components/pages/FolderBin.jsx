@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import FilesContext from "../../context/FilesContext";
 import FolderItems from "../FolderItems";
+import DocumentItems from "../DocumentItems";
 
 function FolderBin() {
   const { binned, setBinned, deleteFolder } = useContext(FilesContext);
@@ -22,23 +23,34 @@ function FolderBin() {
     <div>
       <>
         <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
-          {binned.binned_folders.map((bin) => (
+          {binned?.binned_folders?.map((bin) => (
             <FolderItems 
             key={bin.id}
             folder={bin} 
+            handledelete={() => handleDelete(bin.id)} 
+            // handleFolderClick={handleFolderClick} 
+            // handleBinned={handleRestore} 
+            // handleStarred={handleStarred} 
+            isFolderBin={true} // In FolderBin
+          />
+          ))}
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
+          {binned?.binned_files?.map((bin) => (
+            <DocumentItems 
+            key={bin.id}
+            document={bin} 
             // handledelete={() => handleDelete(bin.id)} 
             // handleFolderClick={handleFolderClick} 
             // handleBinned={handleRestore} 
             // handleStarred={handleStarred} 
             isFolderBin={true} // In FolderBin
           />
-            // <FolderItems
-            //   key={bin.id}
-            //   folder={bin}
-            //   // handledelete={handleDelete}  // Pass the delete handler
-            // />
           ))}
         </div>
+
+        
       </>
     </div>
   );
