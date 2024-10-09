@@ -22,7 +22,7 @@ function FileItems({ files_items_props }) {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            {/* <th>ID</th> */}
             <th>Name</th>
             <th>Member</th>
             {/* <th>Edit</th>
@@ -32,7 +32,7 @@ function FileItems({ files_items_props }) {
         <tbody>
           {files_items_props.map((file) => (
             <tr key={file.id}>
-              <td>{file.id}</td>
+              {/* <td>{file.id}</td> */}
               <td>{file.name}</td>
               <td className="text-center align-middle">
                 <img

@@ -16,7 +16,7 @@ function FolderItems({
   handleRename, // New handler for renaming
   isFolderBin = false,
 }) {
-  const { getFolderItems, zipFolder, sharedFolder } = useContext(FilesContext);
+  const { getFolderItems, zipFolder, sharedFolder, getFolders, getAllFolders } = useContext(FilesContext);
   const [isFolderRename, setFolderRenaming] = useState(false); // To track renaming state
   const [newFolderName, setNewFolderName] = useState(folder?.name); // For renaming input
 
@@ -35,10 +35,12 @@ function FolderItems({
   const handleZipFolder = () => {
     // console.log("zipped")
     zipFolder(folder.id);
+    getAllFolders()
   };
   const handleSharedFolder = () => {
     // console.log("zipped")
     sharedFolder(folder.id);
+    getAllFolders()
   };
 
   return (

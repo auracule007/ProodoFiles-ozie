@@ -15,6 +15,7 @@ const Folder = () => {
     starredFolder,
     renameFolder,
     getFolders,
+    getAllFolders
   } = useContext(FilesContext);
 
   const [folderName, setFolderName] = useState("");
@@ -29,6 +30,7 @@ const Folder = () => {
           await getFolderItems(parentFolderId);
         } else {
           await getFolders();
+          await getAllFolders();
         }
       } catch (error) {
         console.error("Error fetching folders:", error);
@@ -49,6 +51,7 @@ const Folder = () => {
         await getFolderItems(parentFolderId);
       } else {
         await getFolders();
+        await getAllFolders();
       }
     }
   };
@@ -62,6 +65,7 @@ const Folder = () => {
     if (parentFolderId) {
       await getFolderItems(parentFolderId);
     } else {
+      await getAllFolders();
       await getFolders();
     }
   };
@@ -72,6 +76,7 @@ const Folder = () => {
       await getFolderItems(parentFolderId);
     } else {
       await getFolders();
+      await getAllFolders();
     }
   };
 
@@ -81,6 +86,7 @@ const Folder = () => {
       await getFolderItems(parentFolderId);
     } else {
       await getFolders();
+      await getAllFolders();
     }
   };
 
