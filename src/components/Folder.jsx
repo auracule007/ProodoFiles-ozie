@@ -56,10 +56,11 @@ const Folder = () => {
         </form>
       </div>
 
+        {/* <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer"> */}
       <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 justify-center items-center mt-4">
         {Array.isArray(folder) && folder.length > 0 ? (
-          folder.map((file) => (
-            <Card key={file.id} className="md:p-2 cursor-pointer">
+          folder.map((file, index) => (
+            <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer">
               <FolderItems
                 folder={file}
                 handleBinned={handleBinned}

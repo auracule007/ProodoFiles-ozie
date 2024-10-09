@@ -22,6 +22,7 @@ function FolderBin() {
   return (
     <div>
       <>
+      <h1>My Bin</h1>
         <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
           {binned?.binned_folders?.map((bin) => (
             <FolderItems 

@@ -17,26 +17,29 @@ export const FilesProvider = ({ children }) => {
   const [uploads, setUploads] = useState([]);
   const [binned, setBinned] = useState([]);
   const [zipped, setZipped] = useState([]);
+  const [renamed, setRename] = useState("");
   const [shared, setShared] = useState([]);
   const [starred, setStarred] = useState([]);
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  const devurl= "https://proodoosfiles.onrender.com"
-  const clientdevurl = "https://proodo-files-ozie.vercel.app"
-  // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  // const devurl= "https://proodoosfiles.onrender.com"
+  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  const devurl = "http://127.0.0.1:8000";
+  const clientdevurl = "http://localhost:5173";
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      getFiles();
-      getFolders();
-      getAllFolders();
-      viewBin();
-      viewStarredFolders();
-    }
-    // }, []);
-  }, [folder, files]);
+  // setTimeout(() =>{
+    useEffect(() => {
+      if (isAuthenticated) {
+          getFiles();
+          getFolders();
+          getAllFolders();
+          viewBin();
+          viewStarredFolders();
+      }
+    // }, [folder, files])
+    }, [])
+  // }, 2000)
 
   const getFiles = async () => {
     try {
@@ -55,7 +58,7 @@ export const FilesProvider = ({ children }) => {
         setFiles(data);
       }
     } catch (error) {
-      return showHide("error", "Something went wrong");
+      console.error(error);
     }
   };
 
@@ -80,12 +83,13 @@ export const FilesProvider = ({ children }) => {
       if (!res.ok) {
         showHide("error", "Failed to create folder");
       } else {
-        setFolder([...folder, ...data]);
+        setFolder([...folder, data]);
         showHide("success", "Folder created successfully");
+        getAllFolders();
       }
     } catch (error) {
       console.error(error);
-      showHide("error", "An error occurred while creating the folder");
+      // showHide("error", "An error occurred while creating the folder");
     }
   };
 
@@ -106,7 +110,7 @@ export const FilesProvider = ({ children }) => {
         setFolder(data); // Add new folder to the state
       }
     } catch (error) {
-      // console.error(error);
+      console.error(error);
       // showHide("error", "An error occurred while creating the folder");
     }
   };
@@ -120,14 +124,14 @@ export const FilesProvider = ({ children }) => {
         },
       });
       const data = await res.json();
-      // console.log(data);
+      console.log(data);
       if (!res.ok) {
         showHide("error", "Failed to create a folder");
       } else {
         setAllFolder(data);
       }
     } catch (error) {
-      showHide("error", "An error occurred while creating the folder");
+      console.error(error);
     }
   };
 
@@ -151,7 +155,8 @@ export const FilesProvider = ({ children }) => {
         showHide("error", "Failed to upload files.");
       } else {
         showHide("success", "Files uploaded successfully.");
-        setUploads([...uploads, ...data]);
+        setUploads(uploads);
+        getFiles();
       }
     } catch (error) {
       console.log(error);
@@ -175,11 +180,10 @@ export const FilesProvider = ({ children }) => {
       } else {
         setSubFiles(data.files);
         setSubFolder(data.subfolders);
-        setFolder([...data, ...folder]);
+        setFolder([data, ...folder]);
       }
     } catch (error) {
-      showHide("error", "An error occurred while fetching folder items");
-      return [];
+      console.error(error);
     }
   };
 
@@ -211,7 +215,7 @@ export const FilesProvider = ({ children }) => {
 
       showHide("success", "File is downloading");
     } catch (error) {
-      showHide("error", "An error occurred during download");
+      console.error(error);
     }
   };
 
@@ -230,8 +234,9 @@ export const FilesProvider = ({ children }) => {
         if (!res.ok) {
           showHide("error", data.responseText);
         } else {
-          setFolder([...data, folder_id]);
+          setFolder(data);
           showHide("success", data.responseText);
+          getAllFolders();
         }
       } catch (error) {
         console.log(error);
@@ -254,8 +259,9 @@ export const FilesProvider = ({ children }) => {
       if (!res.ok) {
         showHide("errpr", data.responseText);
       } else {
-        setBinned([...data, ...binned]);
+        setBinned([data, ...binned]);
         showHide("success", data.responseText);
+        getAllFolders();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -279,6 +285,7 @@ export const FilesProvider = ({ children }) => {
       } else {
         setStarred(data);
         showHide("success", data.responseText);
+        getAllFolders();
       }
       // console.log(data);
     } catch (error) {
@@ -302,6 +309,7 @@ export const FilesProvider = ({ children }) => {
         showHide("error", data.details);
       } else {
         setBinned(data);
+        getAllFolders();
       }
     } catch (error) {
       console.log(error);
@@ -310,8 +318,8 @@ export const FilesProvider = ({ children }) => {
 
   const renameFolder = async (folder_id, new_name) => {
     try {
-      // const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {
-        const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
+      const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {
+        // const res = await fetch(`https://proodoosfiles.onrender.com/api/fo/rename/`, {  // Replace with your actual API endpoint
         method: "POST",
         headers: {
           Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
@@ -330,17 +338,19 @@ export const FilesProvider = ({ children }) => {
       setFolder((prev) =>
         prev.map((f) => (f.id === folder_id ? { ...f, name: new_name } : f))
       );
+      // setFolder(data)
+      // await getFolders()
       showHide("success", data.detail || "Folder renamed successfully");
     } catch (error) {
       // console.error(error);
-      showHide("error", "An unexpected error occurred.");
+      console.error(error);
     }
   };
 
   const renameFile = async (file_id, new_name) => {
     try {
       const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
-        // const res = await fetch(`https://proodo-files-ozie.vercel.app/api/fo/rename/`, {  // Replace with your actual API endpoint
+        // const res = await fetch(`https://proodoosfiles.onrender.com/api/fo/rename/`, {  // Replace with your actual API endpoint
         method: "POST",
         headers: {
           Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
@@ -356,13 +366,14 @@ export const FilesProvider = ({ children }) => {
       }
 
       const data = await res.json();
-      setFolder((prev) =>
+      setFiles((prev) =>
         prev.map((f) => (f.id === file_id ? { ...f, name: new_name } : f))
       );
       showHide("success", data.detail || "Folder renamed successfully");
+      getFiles();
     } catch (error) {
-      // console.error(error);
-      showHide("error", "An unexpected error occurred.");
+      console.error(error);
+      // showHide("error", "An unexpected error occurred.");
     }
   };
 
@@ -376,10 +387,12 @@ export const FilesProvider = ({ children }) => {
         },
       });
       const data = await res.json();
+      console.log(data);
       if (!res.ok) {
         showHide("error", data.responseText);
       } else {
         setStarred(data);
+        getAllFolders();
       }
     } catch (error) {
       console.error(error);
@@ -400,7 +413,8 @@ export const FilesProvider = ({ children }) => {
       if (!res.ok) {
         showHide("error", data.responseText);
       } else {
-        setZipped([...data, folder_id]);
+        setZipped(data);
+        getAllFolders();
       }
     } catch (error) {
       console.error(error);
@@ -421,7 +435,8 @@ export const FilesProvider = ({ children }) => {
       if (!res.ok) {
         showHide("error", data.responseText);
       } else {
-        setShared([...data, folder_id]);
+        setShared(data);
+        getAllFolders();
       }
     } catch (error) {
       console.error(error);
@@ -459,6 +474,9 @@ export const FilesProvider = ({ children }) => {
         renameFile,
         zipFolder,
         sharedFolder,
+
+        getFiles,
+        getFolders,
       }}
     >
       {children}

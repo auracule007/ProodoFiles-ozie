@@ -21,6 +21,7 @@ function Uploads() {
   };
 
   const handleFileChange = (e) => {
+    e.preventDefault();
     setSelectedFiles(e.target.files);
   };
 
@@ -29,7 +30,7 @@ function Uploads() {
     if (selectedFiles.length && selectedFolder) {
       const filesArray = Array.from(selectedFiles); // Convert FileList to array
       await uploadFiles(filesArray, selectedFolder); // Pass array instead of FileList
-      setSelectedFiles([]); // Reset after upload
+      setSelectedFiles([]);  // Reset after upload
       setSelectedFolder(""); // Reset selected folder
     }
   };

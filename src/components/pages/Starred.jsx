@@ -9,8 +9,10 @@ function Starred() {
   const handleDelete = (folderId) => {
     deleteFolder(folderId);
   };
+  {console.log(starred)}
   return (
     <>
+      <h1>Starred Folder</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
       {starred?.my_starred_folders?.map((star) => (
         <FolderItems

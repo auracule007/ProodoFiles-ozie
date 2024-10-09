@@ -6,6 +6,7 @@ import FilesContext from "../../context/FilesContext";
 function Register() {
   const { showHide, devurl, clientdevurl } = useContext(FilesContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [full_name, setFullName] = useState("");
@@ -17,6 +18,7 @@ function Register() {
   const registerHandler = async (e) => {
     e.preventDefault();
     console.log("Submitted");
+    setLoading(true);
 
     // Create form data using URLSearchParams
     const formData = new URLSearchParams();
@@ -45,7 +47,9 @@ function Register() {
         navigate("/login", {replace: true}); // Use navigate for redirection
       }
     } catch (error) {
-      // console.error("Error:", error);
+      console.error(error);
+    }finally {
+      setLoading(false); // Set loading to false when the request finishes
     }
   };
   
@@ -107,8 +111,9 @@ function Register() {
                 <button
                   type="submit"
                   className="bg-[#0F8B8D] w-24 p-2 text-white"
+                  disabled={loading}
                 >
-                  Register
+                  {loading ? "Loading..." : "Register"}
                 </button>
               </div>
             </form>

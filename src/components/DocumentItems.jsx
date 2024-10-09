@@ -23,6 +23,7 @@ function DocumentItems({ document }) {
   return (
     <div className="w-full h-full">
       <img
+        // src={document.thumbnail}
         src={"/img/download.jpeg"}
         // src={document.path}
         className="md:w-[60%] md:h-auto object-cover"

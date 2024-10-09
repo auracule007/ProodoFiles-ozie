@@ -11,6 +11,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const { setItem } = useLocalStorage("token");
   const [state, dispatch] = useContext(AuthContext);
+  const [loading, setLoading] = useState(false); 
   const redirect = useNavigate();
   const { showHide, produrl, devurl } = useContext(FilesContext);
 
@@ -20,6 +21,7 @@ function Login() {
       showHide("error", "Email and Passowrd is required");
       return;
     }
+    setLoading(true);
     try {
       const res = await fetch(`${devurl}/api/login/`, {
         // const res = await fetch("http://127.0.0.1:8000/api/login/", {
@@ -35,14 +37,16 @@ function Login() {
       } else {
         dispatch({ type: "setToken", payload: data.token });
         setItem(data.token);
-        // Storing token and full name in localStorage
-        // localStorage.setItem("token", data.token);
         localStorage.setItem("full_name", data.full_name);
         redirect("/dashboard");
+        getFiles();
+        getFolders();
         showHide("success", "you are now logged in");
       }
     } catch (error) {
       console.log(error);
+    }finally {
+      setLoading(false); // Set loading to false when the request finishes
     }
   };
   return (
@@ -90,9 +94,10 @@ function Login() {
                     <button
                       type="submit"
                       className="bg-[#0F8B8D] w-24 p-2 text-white"
+                      disabled={loading} 
                       // className="bg-[#D9E5D6] w-24 p-2 text-white"
                     >
-                      Login
+                      {loading ? "Loading..." : "Login"}
                     </button>
                   </div>
                 </form>
