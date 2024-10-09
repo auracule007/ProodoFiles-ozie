@@ -1,48 +1,105 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Card from "../components/shared/Card";
 import FilesContext from "../context/FilesContext";
 import FolderItems from "./FolderItems";
 import FolderFiles from "./FolderFiles";
+import Loaders from "./shared/Loaders";
 
 const Folder = () => {
-  const { folder, createFolder, getFolderItems, deleteFolder, binFolder, starredFolder, renameFolder } = useContext(FilesContext);
+  const {
+    folder,
+    createFolder,
+    getFolderItems,
+    deleteFolder,
+    binFolder,
+    starredFolder,
+    renameFolder,
+    getFolders,
+  } = useContext(FilesContext);
+
   const [folderName, setFolderName] = useState("");
   const [parentFolderId, setParentFolderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchFolders = async () => {
+      setIsLoading(true);
+      try {
+        if (parentFolderId) {
+          await getFolderItems(parentFolderId);
+        } else {
+          await getFolders();
+        }
+      } catch (error) {
+        console.error("Error fetching folders:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFolders();
+  }, []); // Ensure to refetch when parentFolderId changes
 
   const handleCreateFolder = async (e) => {
     e.preventDefault();
     if (folderName.trim()) {
-      createFolder(folderName, parentFolderId);
+      await createFolder(folderName, parentFolderId);
       setFolderName("");
+      if (parentFolderId) {
+        await getFolderItems(parentFolderId);
+      } else {
+        await getFolders();
+      }
     }
   };
 
   const handleFolderClick = (folderId) => {
-    setParentFolderId(folderId);
-    getFolderItems(folderId);
+    setParentFolderId(folderId); // Set parent folder ID when folder is clicked
   };
 
-  const handleDelete = (folderId) => {
-    deleteFolder(folderId);
+  const handleDelete = async (folderId) => {
+    await deleteFolder(folderId);
+    if (parentFolderId) {
+      await getFolderItems(parentFolderId);
+    } else {
+      await getFolders();
+    }
   };
 
-  const handleBinned = (folderId) => {
-    binFolder(folderId);
+  const handleBinned = async (folderId) => {
+    await binFolder(folderId);
+    if (parentFolderId) {
+      await getFolderItems(parentFolderId);
+    } else {
+      await getFolders();
+    }
   };
 
-  const handleStarred = (folderId) => {
-    starredFolder(folderId);
+  const handleStarred = async (folderId) => {
+    await starredFolder(folderId);
+    if (parentFolderId) {
+      await getFolderItems(parentFolderId);
+    } else {
+      await getFolders();
+    }
   };
 
-  const handleRename = (folderId, newName) => {
-    renameFolder(folderId, newName);  // Call rename API method with folderId and newName
+  const handleRename = async (folderId, newName) => {
+    await renameFolder(folderId, newName);
+    if (parentFolderId) {
+      await getFolderItems(parentFolderId);
+    } else {
+      await getFolders();
+    }
   };
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-1 md:gap-4 justify-center items-center">
         <form onSubmit={handleCreateFolder}>
-          <h1>{parentFolderId ? "Create Subfolder" : "Create Root-Level Folder"}</h1>
+          <h1>
+            {parentFolderId ? "Create Subfolder" : "Create Root-Level Folder"}
+          </h1>
           <Card className="flex flex-1 space-x-1">
             <input
               type="text"
@@ -56,11 +113,13 @@ const Folder = () => {
         </form>
       </div>
 
-        {/* <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer"> */}
       <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 justify-center items-center mt-4">
-        {Array.isArray(folder) && folder.length > 0 ? (
+        {isLoading ? (
+          <Loaders />
+          // <p>Loading folders...</p>  // Show loading indicator when fetching folders
+        ) : Array.isArray(folder) && folder.length > 0 ? (
           folder.map((file, index) => (
-            <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer">
+            <Card key={`${file.id}-${index}`} className="md:p-2 cursor-pointer">
               <FolderItems
                 folder={file}
                 handleBinned={handleBinned}
@@ -76,6 +135,7 @@ const Folder = () => {
         )}
       </div>
 
+
       <div>
         <FolderFiles />
       </div>
@@ -85,23 +145,92 @@ const Folder = () => {
 
 export default Folder;
 
+// import React, { useContext, useState } from "react";
+// import Card from "../components/shared/Card";
+// import FilesContext from "../context/FilesContext";
+// import FolderItems from "./FolderItems";
+// import FolderFiles from "./FolderFiles";
 
+// const Folder = () => {
+//   const { folder, createFolder, getFolderItems, deleteFolder, binFolder, starredFolder, renameFolder, getAllFolders, getFiles } = useContext(FilesContext);
+//   const [folderName, setFolderName] = useState("");
+//   const [parentFolderId, setParentFolderId] = useState(null);
 
+//   const handleCreateFolder = async (e) => {
+//     e.preventDefault();
+//     if (folderName.trim()) {
+//       createFolder(folderName, parentFolderId);
+//       setFolderName("");
+//     }
+//   };
 
+//   const handleFolderClick = (folderId) => {
+//     setParentFolderId(folderId);
+//     getFolderItems(folderId);
+//   };
 
+//   const handleDelete = (folderId) => {
+//     deleteFolder(folderId);
+//   };
 
+//   const handleBinned = (folderId) => {
+//     binFolder(folderId);
+//   };
 
+//   const handleStarred = (folderId) => {
+//     starredFolder(folderId);
+//   };
 
+//   const handleRename = (folderId, newName) => {
+//     renameFolder(folderId, newName);  // Call rename API method with folderId and newName
+//   };
 
+//   return (
+//     <>
+//       <div className="grid grid-cols-1 md:grid-cols-1 md:gap-4 justify-center items-center">
+//         <form onSubmit={handleCreateFolder}>
+//           <h1>{parentFolderId ? "Create Subfolder" : "Create Root-Level Folder"}</h1>
+//           <Card className="flex flex-1 space-x-1">
+//             <input
+//               type="text"
+//               className="w-full bg-[#ccc4] p-2 rounded-xl h-auto border-0 outline-none"
+//               placeholder="New folder name"
+//               value={folderName}
+//               onChange={(e) => setFolderName(e.target.value)}
+//             />
+//             <button type="submit">Create</button>
+//           </Card>
+//         </form>
+//       </div>
 
+//         {/* <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer"> */}
+//       <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 justify-center items-center mt-4">
+//         {Array.isArray(folder) && folder.length > 0 ? (
+//           folder.map((file, index) => (
+//             <Card key={`${file.id}-${index}`}  className="md:p-2 cursor-pointer">
+//               <FolderItems
+//                 folder={file}
+//                 handleBinned={handleBinned}
+//                 handleStarred={handleStarred}
+//                 handledelete={handleDelete}
+//                 handleFolderClick={handleFolderClick}
+//                 handleRename={handleRename}  // Pass rename handler
+//               />
+//             </Card>
+//           ))
+//         ) : (
+//           <p>No folders available</p>
+//         )}
+//       </div>
 
+//       <div>
+//         <FolderFiles />
+//       </div>
+//     </>
+//   );
+// };
 
-
-
-
-
-
-
+// export default Folder;
 
 // import React, { useContext, useState } from "react";
 // import Card from "../components/shared/Card";
@@ -194,53 +323,7 @@ export default Folder;
 //   );
 // };
 
-
 // export default Folder;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // function Folder({ selectedFormat }) {
 //   const { folder, createFolder } = useContext(FilesContext); // Assuming you can fetch folder items by folder ID

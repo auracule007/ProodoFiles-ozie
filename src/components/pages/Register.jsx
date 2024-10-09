@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, replace, useNavigate, Navigate } from "react-router-dom"; // No need to import `redirect`
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import FilesContext from "../../context/FilesContext";
+import ButtonLoader from "../shared/ButtonLoader";
 
 function Register() {
   const { showHide, devurl, clientdevurl } = useContext(FilesContext);
@@ -113,7 +114,7 @@ function Register() {
                   className="bg-[#0F8B8D] w-24 p-2 text-white"
                   disabled={loading}
                 >
-                  {loading ? "Loading..." : "Register"}
+                  {loading ? <ButtonLoader /> : "Register"}
                 </button>
               </div>
             </form>

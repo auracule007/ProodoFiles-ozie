@@ -37,7 +37,7 @@ function Files() {
       <FileItems files_items_props={currentItems} />
 
       {/* Pagination controls */}
-      <div className="pagination-controls flex flex-wrap items-center gap-2 justify-center">
+      <div className="pagination-controls flex flex-wrap items-center gap-2 justify-around">
         <button
           onClick={prevPage}
           className="bg-red-300 w-[10%] p-1 text-xs rounded-lg"

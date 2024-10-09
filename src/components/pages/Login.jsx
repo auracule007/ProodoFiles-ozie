@@ -4,6 +4,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import AuthContext from "../../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import FilesContext from "../../context/FilesContext";
+import ButtonLoader from "../shared/ButtonLoader";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +14,7 @@ function Login() {
   const [state, dispatch] = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
   const redirect = useNavigate();
-  const { showHide, produrl, devurl } = useContext(FilesContext);
+  const { showHide, produrl, devurl, getFiles, getFolders } = useContext(FilesContext);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -97,7 +98,7 @@ function Login() {
                       disabled={loading} 
                       // className="bg-[#D9E5D6] w-24 p-2 text-white"
                     >
-                      {loading ? "Loading..." : "Login"}
+                      {loading ? <ButtonLoader /> : "Login"}
                     </button>
                   </div>
                 </form>

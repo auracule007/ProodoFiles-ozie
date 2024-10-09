@@ -13,16 +13,16 @@ import Starred from "../../components/pages/Starred";
 
 function Dashboard() {
   const { isAuthenticated } = useContext(FilesContext);
-  const [component, setComponent] = useState("dashboard");
+  // const [component, setComponent] = useState("dashboard");
    // Initialize the component state from localStorage, or default to "dashboard"
-  //  const [component, setComponent] = useState(() => {
-  //   return localStorage.getItem("component") || "dashboard";
-  // });
+   const [component, setComponent] = useState(() => {
+    return localStorage.getItem("component") || "dashboard";
+  });
 
   // Update localStorage whenever the component state changes
-  // useEffect(() => {
-  //   localStorage.setItem("component", component);
-  // }, [component]);
+  useEffect(() => {
+    localStorage.setItem("component", component);
+  }, [component]);
 
   if(!isAuthenticated){
     return <Navigate to="/" />
