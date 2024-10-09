@@ -476,7 +476,7 @@ export const FilesProvider = ({ children }) => {
         sharedFolder,
 
         getFiles,
-        getFolders,
+        getFolders
       }}
     >
       {children}
