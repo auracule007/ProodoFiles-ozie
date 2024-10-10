@@ -16,7 +16,8 @@ function FolderItems({
   handleRename, // New handler for renaming
   isFolderBin = false,
 }) {
-  const { getFolderItems, zipFolder, sharedFolder, getFolders, getAllFolders } = useContext(FilesContext);
+  const { getFolderItems, zipFolder, sharedFolder, getFolders, getAllFolders } =
+    useContext(FilesContext);
   const [isFolderRename, setFolderRenaming] = useState(false); // To track renaming state
   const [newFolderName, setNewFolderName] = useState(folder?.name); // For renaming input
 
@@ -27,20 +28,20 @@ function FolderItems({
 
   const handleRenameSubmit = () => {
     // if (newFolderName.trim() && newFolderName !== folder.name) {
-      handleRename(folder.id, newFolderName); // Pass new folder name to handler
-      setFolderRenaming(false); // Close the renaming input
+    handleRename(folder.id, newFolderName); // Pass new folder name to handler
+    setFolderRenaming(false); // Close the renaming input
     // }
   };
 
   const handleZipFolder = () => {
     // console.log("zipped")
     zipFolder(folder.id);
-    getAllFolders()
+    getAllFolders();
   };
   const handleSharedFolder = () => {
     // console.log("zipped")
     sharedFolder(folder.id);
-    getAllFolders()
+    getFolders();
   };
 
   return (
@@ -55,6 +56,7 @@ function FolderItems({
           className="absolute top-0 left-[85%] z-10"
           onClick={handleZipFolder}
           type="button"
+          title="Zip Folder"
         >
           <MdFolderZip className="text-xl" />
         </button>
@@ -62,6 +64,7 @@ function FolderItems({
           className="absolute top-0 left-[60%] z-10"
           onClick={handleSharedFolder}
           type="button"
+          title="Share Folder"
         >
           <CiShare1 className="text-xl" />
         </button>
@@ -99,20 +102,21 @@ function FolderItems({
         <div className="flex justify-between mt-2">
           <button
             type="button"
-            onClick={() => handledelete(folder.id)}
-            className="bg-red-500 text-white px-1 py-1 rounded"
-            aria-label="Delete Folder"
-          >
-            <AiOutlineDelete />
-          </button>
-
-          <button
-            type="button"
             onClick={() => handleBinned(folder.id)}
             className="bg-yellow-500 text-white px-1 py-1 rounded"
             aria-label="Move to Bin"
+            title="Move to Bin"
           >
             <FaRecycle />
+          </button>
+          <button
+            type="button"
+            onClick={() => handledelete(folder.id)}
+            className="bg-red-500 text-white px-1 py-1 rounded"
+            aria-label="Delete Folder"
+            title="Delete Folder"
+          >
+            <AiOutlineDelete />
           </button>
 
           <button
@@ -120,6 +124,7 @@ function FolderItems({
             onClick={() => handleStarred(folder.id)}
             className="bg-blue-500 text-white px-1 py-1 rounded"
             aria-label="Star Folder"
+            title="Star Folder"
           >
             <TbTagStarred />
           </button>
@@ -129,6 +134,7 @@ function FolderItems({
             onClick={() => setFolderRenaming(true)} // Show input to rename
             className="bg-green-500 text-white px-1 py-1 rounded"
             aria-label="Rename Folder"
+            title="Rename Folder"
           >
             <MdDriveFileRenameOutline />
           </button>
@@ -139,14 +145,6 @@ function FolderItems({
 }
 
 export default FolderItems;
-
-
-
-
-
-
-
-
 
 // function FolderItems({
 //   folder,

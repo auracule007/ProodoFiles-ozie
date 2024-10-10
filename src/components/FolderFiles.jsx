@@ -16,7 +16,7 @@ function FolderFiles({ handleFolderClick }) {
             <FolderItems key={index} folder={folder} />
           ))
         ) : (
-          <h1>No Folders in this folder</h1>
+          <h1></h1>
         )}
       </div>
       
@@ -27,7 +27,7 @@ function FolderFiles({ handleFolderClick }) {
             <DocumentItems key={index} document={file} />
           ))
         ) : (
-          <h1>No Files in this folder</h1>
+          <h1></h1>
         )}
       </div>
     </div>
