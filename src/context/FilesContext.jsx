@@ -23,11 +23,11 @@ export const FilesProvider = ({ children }) => {
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  // const devurl = "https://proodoosfiles.onrender.com";
+  const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
-  const devurl = "http://127.0.0.1:8000";
-  const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const devurl = "http://127.0.0.1:8000";
+  // const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -315,7 +315,8 @@ export const FilesProvider = ({ children }) => {
 
   const renameFolder = async (folder_id, new_name) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {
+      const res = await fetch(`https://proodoosfiles.onrender.com/api/fo/rename/`, {
+      // const res = await fetch(`http://127.0.0.1:8000/api/fo/rename/`, {
       // const res = await fetch(
       //   `http://api.proodosfiles.com/api/fo/rename/`,
       //   {
@@ -353,7 +354,8 @@ export const FilesProvider = ({ children }) => {
 
   const renameFile = async (file_id, new_name, override=true) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
+      const res = await fetch(`https://proodoosfiles.onrender.com/api/fi/rename/`, {
+      // const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
       // const res = await fetch(
       //   `http://api.proodosfiles.com/api/fi/rename/`,
       //   {
