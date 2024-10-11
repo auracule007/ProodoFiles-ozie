@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 import FilesContext from "../../context/FilesContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 function VerifyEmail() {
-  const { devurl, showHide, clientdevurl  } = useContext(FilesContext);
+  const { devurl, showHide, clientdevurl, isAuthenticated  } = useContext(FilesContext);
   const [email, setEmail] = useState("");
   const [url, setUrl] = useState(`${clientdevurl}/verify`); // Ensure clientdevurl is correctly defined in context
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Using navigate for programmatic routing
+
+  if(isAuthenticated) {
+    return <Navigate to="/dashboard" />
+  }
 
   const handleVerifyEmail = async (e) => {
     e.preventDefault();

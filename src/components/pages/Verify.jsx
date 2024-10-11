@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import FilesContext from "../../context/FilesContext";
 
 function Verify() {
     const [verificationStatus, setVerificationStatus] = useState(null);
-    const { showHide, produrl, clientProurl, devurl, clientdevurl } = useContext(FilesContext);
+    const { showHide, produrl, clientProurl, devurl, clientdevurl, isAuthenticated } = useContext(FilesContext);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
+
+    if(isAuthenticated) {
+      return <Navigate to="/dashboard" />
+    }
 
   // Function to decode base64 encoded u_info
   const decodeUserInfo = (u_info) => {

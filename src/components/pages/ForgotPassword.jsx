@@ -1,11 +1,16 @@
 import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import FilesContext from "../../context/FilesContext";
 
 function ForgotPassword() {
-    const { showHide, clientdevurl, devurl } = useContext(FilesContext);
+    const { showHide, clientdevurl, devurl, isAuthenticated } = useContext(FilesContext);
     const [email, setEmail] = useState("");
     const [url, setUrl] = useState(`${clientdevurl}/reset-password`);
     const [message, setMessage] = useState("");
+
+    if(isAuthenticated) {
+      return <Navigate to="/dashboard" />
+    }
   
     const handleSubmit = async (e) => {
       e.preventDefault();

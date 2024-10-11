@@ -5,7 +5,7 @@ import FilesContext from "../../context/FilesContext";
 import ButtonLoader from "../shared/ButtonLoader";
 
 function Register() {
-  const { showHide, devurl, clientdevurl } = useContext(FilesContext);
+  const { showHide, devurl, clientdevurl, isAuthenticated } = useContext(FilesContext);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -15,6 +15,10 @@ function Register() {
   const [url, setUrl] = useState(`${clientdevurl}/verify`);
   // const [url, setUrl] = useState("http://localhost:5173/verify");
   const navigate = useNavigate(); // Use 'navigate' instead of 'redirect'
+
+  if(isAuthenticated) {
+    return <Navigate to="/dashboard" />
+  }
 
   const registerHandler = async (e) => {
     e.preventDefault();

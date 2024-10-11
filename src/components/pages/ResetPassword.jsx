@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import FilesContext from "../../context/FilesContext";
 
 // Utility to parse query parameters
@@ -8,7 +8,7 @@ function useQuery() {
 }
 
 function ResetPassword() {
-  const { showHide, devurl, clientdevurl } = useContext(FilesContext);
+  const { showHide, devurl, clientdevurl, isAuthenticated } = useContext(FilesContext);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState("");
@@ -17,6 +17,10 @@ function ResetPassword() {
 
   const query = useQuery();
   const navigate = useNavigate();
+
+  if(isAuthenticated) {
+    return <Navigate to="/dashboard" />
+  }
 
   useEffect(() => {
     const u_info = query.get("u_info");

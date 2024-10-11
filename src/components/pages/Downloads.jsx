@@ -8,8 +8,8 @@ function Downloads() {
   const {isAuthenticated} = useContext(FilesContext);
 
   const full_name = localStorage.getItem("full_name");
-  if(!isAuthenticated) {
-    return <Navigate to="/" />;
+  if(isAuthenticated){
+    return <Navigate to="/dashboard" />
   }
   return (
     <div>

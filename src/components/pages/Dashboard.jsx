@@ -24,9 +24,9 @@ function Dashboard() {
   //   localStorage.setItem("component", component);
   // }, [component]);
 
-  if(!isAuthenticated){
-    return <Navigate to="/" />
-  }
+  // if(isAuthenticated){
+  //   return <Navigate to="/dashboard" />
+  // }
 
   return (
     <div className="flex bg-[#f8f9fc]">

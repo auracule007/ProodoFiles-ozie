@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import Card from "../shared/Card";
 import Files from "../Files";
 import Documents from "../Documents";
@@ -8,11 +9,13 @@ import DocumentItems from "../DocumentItems";
 import { FaAnglesLeft } from "react-icons/fa6";
 import { FaAnglesRight } from "react-icons/fa6";
 import Loaders from "../shared/Loaders";
+// import { Navigate } from "react-router-dom";
 
 function Account() {
   const { files, isAuthenticated, getFiles } = useContext(FilesContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false); // Loading state
+
 
   useEffect(() => {
     const fetchFiles = async () => {

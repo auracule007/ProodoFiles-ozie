@@ -33,7 +33,7 @@ function DocumentItems({ document }) {
       <div className="md:pt-2">
         {!isRenaming ? (
           <h2 className="text-start flex flex-wrap items-center text-[10px] justify-center gap-2">
-            {document?.name}
+            {/* {document?.name} */}
           </h2>
         ) : (
           <div className="flex items-center justify-center gap-2">

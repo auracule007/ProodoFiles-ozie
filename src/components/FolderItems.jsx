@@ -107,25 +107,6 @@ function FolderItems({
         <div className="flex justify-between mt-2">
           <button
             type="button"
-            onClick={() => handleBinned(folder.id)}
-            className="bg-yellow-500 text-white px-1 py-1 rounded"
-            aria-label="Move to Bin"
-            title="Move to Bin"
-          >
-            <FaRecycle />
-          </button>
-          <button
-            type="button"
-            onClick={() => handledelete(folder.id)}
-            className="bg-red-500 text-white px-1 py-1 rounded"
-            aria-label="Delete Folder"
-            title="Delete Folder"
-          >
-            <AiOutlineDelete />
-          </button>
-
-          <button
-            type="button"
             onClick={() => handleStarred(folder.id)}
             className="bg-blue-500 text-white px-1 py-1 rounded"
             aria-label="Star Folder"
@@ -143,6 +124,25 @@ function FolderItems({
           >
             <MdDriveFileRenameOutline />
           </button>
+
+          <button
+            type="button"
+            onClick={() => handleBinned(folder.id)}
+            className="bg-yellow-500 text-white px-1 py-1 rounded"
+            aria-label="Move to Bin"
+            title="Move to Bin"
+          >
+            <FaRecycle />
+          </button>
+          <button
+            type="button"
+            onClick={() => handledelete(folder.id)}
+            className="bg-red-500 text-white px-1 py-1 rounded"
+            aria-label="Delete Folder"
+            title="Delete Folder"
+          >
+            <AiOutlineDelete />
+          </button>
         </div>
       )}
     </div>
@@ -150,8 +150,6 @@ function FolderItems({
 }
 
 export default FolderItems;
-
-
 
 // import React, { useContext, useState } from "react";
 // import FilesContext from "../context/FilesContext";
@@ -184,7 +182,6 @@ export default FolderItems;
 //     // handleFolderClick(folder.id);
 //     handleFolderClick(folder.id);
 //   };
-
 
 //   const handleRenameSubmit = () => {
 //     // if (newFolderName.trim() && newFolderName !== folder.name) {

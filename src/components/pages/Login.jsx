@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AuthContext from "../../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,8 +14,11 @@ function Login() {
   const [state, dispatch] = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
   const redirect = useNavigate();
-  const { showHide, produrl, devurl, getFiles, getFolders } = useContext(FilesContext);
+  const { showHide, isAuthenticated,produrl, devurl, getFiles, getFolders } = useContext(FilesContext);
 
+  if(isAuthenticated) {
+    return <Navigate to="/dashboard" />
+  }
   const loginHandler = async (e) => {
     e.preventDefault();
     if (!email || !password) {

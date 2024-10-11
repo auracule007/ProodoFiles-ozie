@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import FilesContext from "../../context/FilesContext";
+import { Navigate } from "react-router-dom";
 import FolderItems from "../FolderItems";
 import DocumentItems from "../DocumentItems";
 import Loaders from "../shared/Loaders";
 
 function Starred() {
-  const { starred, deleteFolder, viewStarredFolders } = useContext(FilesContext);
+  const { starred, deleteFolder, viewStarredFolders, isAuthenticated } = useContext(FilesContext);
   const [isLoading, setIsLoading] = useState(true); // To manage loading state
+
+  // if(isAuthenticated) {
+  //   return <Navigate to="/dashboard" />
+  // }
 
   useEffect(() => {
     const fetchStarredItems = async () => {

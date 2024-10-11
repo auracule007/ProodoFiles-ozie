@@ -12,9 +12,9 @@ function FilesDocs() {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const { isAuthenticated, getFiles } = useContext(FilesContext);
   
-  if (!isAuthenticated) {
-    return <Navigate to="/" />;
-  }
+  // if(isAuthenticated){
+  //   return <Navigate to="/dashboard" />
+  // }
 
   const handleFormatChange = (e) => {
     setSelectedFormat(e.target.value);
