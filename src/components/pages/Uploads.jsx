@@ -1,10 +1,13 @@
 import React, { useContext, useState } from "react";
 import Card from "../shared/Card";
 import FilesContext from "../../context/FilesContext";
+import ButtonLoader from "../shared/ButtonLoader";
 
 function Uploads() {
 	const { isAuthenticated, folder, allfolder, createFolder, uploadFiles } =
 		useContext(FilesContext);
+	const [loading, setLoading] = useState(false); 
+	const [newloading, setNewLoading] = useState(false); 
 	const [folderName, setFolderName] = useState(""); // State for new folder name
 	const [selectedFiles, setSelectedFiles] = useState([]); // State for selected files
 	const [selectedFolder, setSelectedFolder] = useState(""); // State for selected folder ID
@@ -15,9 +18,16 @@ function Uploads() {
 
 	const handleCreateFolder = (e) => {
 		e.preventDefault();
-		if (folderName.trim()) {
-			createFolder(folderName); // Call createFolder with the folder name
-			setFolderName(""); // Reset input field
+		setNewLoading(true);
+		try{
+			if (folderName.trim()) {
+				createFolder(folderName); // Call createFolder with the folder name
+				setFolderName(""); // Reset input field
+			}
+		}catch(error){
+			console.error(error)
+		}finally {
+			setNewLoading(false); // Set loading to false when the request finishes
 		}
 	};
 
@@ -28,11 +38,18 @@ function Uploads() {
 
 	const handleUpload = async (e) => {
 		e.preventDefault();
-		if (selectedFiles.length && selectedFolder) {
-			const filesArray = Array.from(selectedFiles); // Convert FileList to array
-			await uploadFiles(filesArray, selectedFolder); // Pass array instead of FileList
-			setSelectedFiles([]); // Reset after upload
-			setSelectedFolder(""); // Reset selected folder
+		setLoading(true)
+		try {
+			if (selectedFiles.length && selectedFolder) {
+				const filesArray = Array.from(selectedFiles); // Convert FileList to array
+				await uploadFiles(filesArray, selectedFolder); // Pass array instead of FileList
+				setSelectedFiles([]); // Reset after upload
+				setSelectedFolder(""); // Reset selected folder
+			}
+		} catch (error) {
+			console.error(error);
+		}finally{
+			setLoading(false)
 		}
 	};
 
@@ -48,9 +65,12 @@ function Uploads() {
 								className="w-full bg-[#ccc4] p-2 rounded-xl h-auto border-0 outline-none"
 								placeholder="New folder name"
 								value={folderName}
+								disabled={newloading} 
 								onChange={(e) => setFolderName(e.target.value)} // Handle input change
 							/>
-							<button type="submit">Create</button>
+							<button type="submit" className="bg-[#0F8B8D] w-24 p-2 text-white">
+							{newloading ? <ButtonLoader /> : "create"}
+							</button>
 						</Card>
 					</form>
 
@@ -88,8 +108,9 @@ function Uploads() {
 							<div className="mb-4">
 								<button
 									type="submit"
+									disabled={loading} 
 									className="bg-[#0F8B8D] w-24 p-2 text-white">
-									Upload
+										{loading ? <ButtonLoader /> : "upload"}
 								</button>
 							</div>
 						</form>

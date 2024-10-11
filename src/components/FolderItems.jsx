@@ -23,8 +23,13 @@ function FolderItems({
 
   const handleClick = () => {
     getFolderItems(folder.id);
+    // handleFolderClick(folder.id);
+  };
+  const handleSubfolderClick = () => {
+    // getFolderItems(folder.id);
     handleFolderClick(folder.id);
   };
+
 
   const handleRenameSubmit = () => {
     // if (newFolderName.trim() && newFolderName !== folder.name) {

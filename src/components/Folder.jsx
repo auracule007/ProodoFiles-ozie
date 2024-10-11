@@ -4,6 +4,7 @@ import FilesContext from "../context/FilesContext";
 import FolderItems from "./FolderItems";
 import FolderFiles from "./FolderFiles";
 import Loaders from "./shared/Loaders";
+import ButtonLoader from "./shared/ButtonLoader";
 
 const Folder = () => {
   const {
@@ -20,6 +21,7 @@ const Folder = () => {
 
   const [folderName, setFolderName] = useState("");
   const [parentFolderId, setParentFolderId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -44,15 +46,22 @@ const Folder = () => {
 
   const handleCreateFolder = async (e) => {
     e.preventDefault();
-    if (folderName.trim()) {
-      await createFolder(folderName, parentFolderId);
-      setFolderName("");
-      if (parentFolderId) {
-        await getFolderItems(parentFolderId);
-      } else {
-        await getFolders();
-        await getAllFolders();
+    setLoading(true)
+    try {
+      if (folderName.trim()) {
+        await createFolder(folderName, parentFolderId);
+        setFolderName("");
+        if (parentFolderId) {
+          await getFolderItems(parentFolderId);
+        } else {
+          await getFolders();
+          await getAllFolders();
+        }
       }
+    } catch (error) {
+      console.error(error)
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -112,9 +121,12 @@ const Folder = () => {
               className="w-full bg-[#ccc4] p-2 rounded-xl h-auto border-0 outline-none"
               placeholder="New folder name"
               value={folderName}
+              disabled={loading}
               onChange={(e) => setFolderName(e.target.value)}
             />
-            <button type="submit">Create</button>
+            <button type="submit" className="bg-[#0F8B8D] w-24 p-2 text-white">
+            {loading ? <ButtonLoader /> : "create"}
+            </button>
           </Card>
         </form>
       </div>

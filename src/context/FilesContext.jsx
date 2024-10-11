@@ -25,10 +25,10 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -232,8 +232,8 @@ export const FilesProvider = ({ children }) => {
           showHide("error", data.responseText);
         } else {
           setFolder(data);
-          getAllFolders();
-          getFolders();
+          // getAllFolders();
+          // getFolders();
           showHide("success", data.responseText);
         }
       } catch (error) {
@@ -341,9 +341,12 @@ export const FilesProvider = ({ children }) => {
       setFolder((prev) =>
         prev.map((f) => (f.id === folder_id ? { ...f, name: new_name } : f))
       );
-      getFolders();
       // setFolder(data)
+      // getFolders();
+      // console.log("get folders", getFolders())
       // setTimeout(() => {
+      //   console.log("get folders all", getAllFolders())
+      //   // getAllFolders();
       // }, 1000);
       // await getFolders()
       showHide("success", data.detail || "Folder renamed successfully");
