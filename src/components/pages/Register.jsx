@@ -12,6 +12,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [full_name, setFullName] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const [url, setUrl] = useState(`${clientdevurl}/verify`);
   // const [url, setUrl] = useState("http://localhost:5173/verify");
   const navigate = useNavigate(); // Use 'navigate' instead of 'redirect'
@@ -50,6 +51,7 @@ function Register() {
       } else {
         showHide("success", data.responseText);
         navigate("/login", {replace: true}); // Use navigate for redirection
+        setMessage("Check your email for verification email")
       }
     } catch (error) {
       console.error(error);
@@ -125,6 +127,8 @@ function Register() {
             <div className="mb-3 text-end">
               <Link to="/login">Already Have an account?...</Link>
             </div>
+
+            <p>{message}</p>
           </div>
         </div>
       </div>

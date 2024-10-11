@@ -66,6 +66,9 @@ function Login() {
                     <label htmlFor="" className="capitalize">
                       Email
                     </label>
+                    <label htmlFor="" className="capitalize">
+                      <em>Please make sure your email is verified</em>
+                    </label>
                     <input
                       type="email"
                       onChange={(e) => setEmail(e.target.value)}
