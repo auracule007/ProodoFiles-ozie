@@ -498,7 +498,6 @@ export const FilesProvider = ({ children }) => {
         getAllFolders,
         viewBin,
         viewStarredFolders,
-        viewBin,
       }}
     >
       {children}
