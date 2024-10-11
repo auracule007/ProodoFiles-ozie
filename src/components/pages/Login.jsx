@@ -67,7 +67,7 @@ function Login() {
                       Email
                     </label>
                     <label htmlFor="" className="capitalize">
-                      <em>Please make sure your email is verified</em>
+                      
                     </label>
                     <input
                       type="email"
@@ -76,6 +76,7 @@ function Login() {
                       name=""
                       id="email"
                     />
+                    <em>Please make sure your email is verified</em>
                   </div>
 
                   <div className="mb-6">
