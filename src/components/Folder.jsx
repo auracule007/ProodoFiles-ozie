@@ -138,6 +138,7 @@ const Folder = () => {
         ) : Array.isArray(folder) && folder.length > 0 ? (
           folder.map((file, index) => (
             <Card key={`${file.id}-${index}`} className="md:p-2 cursor-pointer">
+              {/* {console.log(file.id)} */}
               <FolderItems
                 folder={file}
                 handleBinned={handleBinned}

@@ -25,10 +25,10 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
