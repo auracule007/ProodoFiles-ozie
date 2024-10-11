@@ -9,9 +9,9 @@ function VerifyEmail() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Using navigate for programmatic routing
 
-  if(isAuthenticated) {
-    return <Navigate to="/dashboard" />
-  }
+  // if(isAuthenticated) {
+  //   return <Navigate to="/dashboard" />
+  // }
 
   const handleVerifyEmail = async (e) => {
     e.preventDefault();

@@ -18,9 +18,9 @@ function ResetPassword() {
   const query = useQuery();
   const navigate = useNavigate();
 
-  if(isAuthenticated) {
-    return <Navigate to="/dashboard" />
-  }
+  // if(isAuthenticated) {
+  //   return <Navigate to="/dashboard" />
+  // }
 
   useEffect(() => {
     const u_info = query.get("u_info");

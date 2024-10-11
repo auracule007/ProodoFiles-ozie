@@ -9,9 +9,9 @@ function Verify() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    if(isAuthenticated) {
-      return <Navigate to="/dashboard" />
-    }
+    // if(isAuthenticated) {
+    //   return <Navigate to="/dashboard" />
+    // }
 
   // Function to decode base64 encoded u_info
   const decodeUserInfo = (u_info) => {
