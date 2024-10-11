@@ -25,10 +25,10 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  const clientdevurl = "https://proodo-files-ozie.vercel.app"
+  // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -356,7 +356,7 @@ export const FilesProvider = ({ children }) => {
     }
   };
 
-  const renameFile = async (file_id, new_name, override=true) => {
+  const renameFile = async (file_id, new_name) => {
     try {
       const res = await fetch(`https://proodoosfiles.onrender.com/api/fi/rename/`, {
       // const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
@@ -369,13 +369,13 @@ export const FilesProvider = ({ children }) => {
             Authorization: `Token ${getItem("token")}`, // Replace getItem with your token retrieval function
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ file_id, new_name, override }),
+          body: JSON.stringify({ file_id, new_name }),
         }
       );
 
       if (!res.ok) {
         const errorData = await res.json();
-        showHide("error", errorData.detail || "Failed to rename folder");
+        showHide("error", errorData.detail || "Failed to rename File");
         return;
       }
 
@@ -383,7 +383,7 @@ export const FilesProvider = ({ children }) => {
       setFiles((prev) =>
         prev.map((f) => (f.id === file_id ? { ...f, name: new_name } : f))
       );
-      showHide("success", data.detail || "Folder renamed successfully");
+      showHide("success", data.detail || "File renamed successfully");
       setTimeout(()=> {
         console.log("fetching again")
         getFiles();
