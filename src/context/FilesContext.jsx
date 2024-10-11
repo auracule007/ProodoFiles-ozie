@@ -23,8 +23,8 @@ export const FilesProvider = ({ children }) => {
   const [state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
 
-  // const devurl = "https://proodoosfiles.onrender.com";
-  const devurl = "http://api.proodosfiles.com";
+  const devurl = "https://proodoosfiles.onrender.com";
+  // const devurl = "http://api.proodosfiles.com";
   const clientdevurl = "https://www.proodosfiles.com"
   // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
