@@ -31,7 +31,7 @@ function Dashboard() {
   return (
     <div className="flex bg-[#f8f9fc]">
       {/* Sidebar */}
-      <div className="fixed h-screen w-1/5">
+      <div className="fixed h-screen w-1/5 z-20">
         <Sidebar setComponent={setComponent} />
       </div>
         <Link to={"/login"}></Link>

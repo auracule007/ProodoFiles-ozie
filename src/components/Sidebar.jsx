@@ -35,7 +35,7 @@ function Sidebar({ setComponent }) {
   }
 
   return (
-    <div className="relative z-50 h-screen">
+    <div className="relative z-10 h-screen">
       {/* Sidebar */}
       <div
         className={`h-full w-64 bg-[#fff] text-white shadow-lg transition-transform duration-300 ease-in-out ${

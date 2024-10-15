@@ -51,8 +51,8 @@ function FolderItems({
   };
 
   return (
-    <div className="w-full h-full p-2 border rounded-md shadow-md z-10">
-      <div className="cursor-pointer z-10 relative">
+    <div className="w-full h-full p-2 border rounded-md shadow-md">
+      <div className="cursor-pointer relative">
         <img
           src="/img/folder5.png"
           onClick={handleSubfolderClick}
@@ -60,7 +60,7 @@ function FolderItems({
           alt={`${folder?.name} thumbnail`}
         />
         <button
-          className="absolute top-0 left-[85%] z-10"
+          className="absolute top-0 left-[85%]"
           onClick={handleZipFolder}
           type="button"
           title="Zip Folder"
@@ -68,7 +68,7 @@ function FolderItems({
           <MdFolderZip className="text-xl" />
         </button>
         <button
-          className="absolute top-0 left-[60%] z-10"
+          className="absolute top-0 left-[60%]"
           onClick={handleSharedFolder}
           type="button"
           title="Share Folder"
