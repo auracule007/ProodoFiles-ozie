@@ -55,6 +55,7 @@ function FolderItems({
       <div className="cursor-pointer z-10 relative">
         <img
           src="/img/folder5.png"
+          onClick={handleSubfolderClick}
           className="md:w-full relative z-0 md:h-48 object-cover"
           alt={`${folder?.name} thumbnail`}
         />
@@ -112,13 +113,7 @@ function FolderItems({
       </div>
       {!isFolderBin && (
         <>
-          <button
-            type="submit"
-            className="bg-blue-500 w-full rounded-lg text-white text-xs p-1"
-            onClick={handleSubfolderClick}
-          >
-            Open
-          </button>
+          
 
           <div className="flex justify-between mt-2">
             <button

@@ -55,14 +55,14 @@ function Sidebar({ setComponent }) {
                 <FaHome /> Dashboard
               </div>
             </li>
-            <li
+            {/* <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("files")}
             >
               <div className="flex justify-start items-center gap-2">
                 <PiFilesBold /> Files
               </div>
-            </li>
+            </li> */}
             <li
               className="py-2 px-4 hover:bg-[#D9E5D6] capitalize hover:text-[#fff] cursor-pointer"
               onClick={() => setComponent("folders")}

@@ -25,11 +25,11 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  const clientdevurl = "https://www.proodosfiles.com"
+  // const clientdevurl = "https://www.proodosfiles.com"
   // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -242,6 +242,31 @@ export const FilesProvider = ({ children }) => {
       }
     }
   };
+  // const deleteDocument = async (folder_id) => {
+  //   if (window.confirm("Are you sure you want to delete?..")) {
+  //     try {
+  //       const res = await fetch(`${devurl}/api/fi/del/`, {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Token ${getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ folder_id }),
+  //       });
+  //       const data = await res.json();
+  //       if (!res.ok) {
+  //         showHide("error", data.responseText);
+  //       } else {
+  //         setFolder(data);
+  //         // getAllFolders();
+  //         // getFolders();
+  //         showHide("success", data.responseText);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   const binFolder = async (folderId) => {
     try {
@@ -266,6 +291,30 @@ export const FilesProvider = ({ children }) => {
       console.error("Error:", error);
     }
   };
+  
+  const binDocument = async (fileId) => {
+    try {
+      const res = await fetch(`${devurl}/api/fi/bin/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file_id: fileId }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        showHide("errpr", data.responseText);
+      } else {
+        setBinned([data, ...binned]);
+        showHide("success", data.responseText);
+        getAllFolders();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const starredFolder = async (folderId) => {
     try {
@@ -276,6 +325,30 @@ export const FilesProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ folder_id: folderId }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        showHide("error", data.responseText);
+      } else {
+        setStarred(data);
+        showHide("success", data.responseText);
+        getAllFolders();
+      }
+      // console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const starredDocument = async (fileId) => {
+    try {
+      const response = await fetch(`${devurl}/api/fi/star/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file_id: fileId }),
       });
 
       const data = await response.json();
@@ -485,6 +558,8 @@ export const FilesProvider = ({ children }) => {
         deleteFolder,
         starredFolder,
         binFolder,
+        binDocument,
+        starredDocument,
 
         allfolder,
         clientdevurl,
