@@ -38,7 +38,7 @@ function FolderBin() {
         ) : (
           <>
             {/* Render binned folders */}
-            <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 justify-center items-center">
               {binned?.binned_folders?.map((bin) => (
                 <FolderItems
                   key={bin.id}
@@ -50,7 +50,7 @@ function FolderBin() {
             </div>
 
             {/* Render binned files */}
-            <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 justify-center items-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 justify-center items-center">
               {binned?.binned_files?.map((bin) => (
                 <DocumentItems
                   key={bin.id}
