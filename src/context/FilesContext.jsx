@@ -25,11 +25,11 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  const clientdevurl = "https://www.proodosfiles.com"
+  // const clientdevurl = "https://www.proodosfiles.com"
   // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  // const clientdevurl = "http://localhost:5173";
+  const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -178,7 +178,7 @@ export const FilesProvider = ({ children }) => {
       } else {
         setSubFiles(data.files);
         setSubFolder(data.subfolders);
-        setFolder([data, ...folder]);
+        // setFolder([data, ...folder]);
       }
     } catch (error) {
       console.error(error);
@@ -468,24 +468,29 @@ export const FilesProvider = ({ children }) => {
         files,
         isAuthenticated,
         folder,
+
         showHide,
         createFolder,
         uploadFiles,
         getFolderItems,
+
         uploads,
         subfolder,
         subfiles,
         starred,
         devurl,
+
         downloadFile,
         deleteFolder,
         starredFolder,
         binFolder,
+
         allfolder,
         clientdevurl,
         binned,
         shared,
         zipped,
+
         viewBin,
         setBinned,
         renameFolder,
@@ -496,7 +501,6 @@ export const FilesProvider = ({ children }) => {
         getFiles,
         getFolders,
         getAllFolders,
-        viewBin,
         viewStarredFolders,
       }}
     >

@@ -21,6 +21,11 @@ function FolderItems({
   const [isFolderRename, setFolderRenaming] = useState(false); // To track renaming state
   const [newFolderName, setNewFolderName] = useState(folder?.name); // For renaming input
 
+  const handleSubfolderClick = () => {
+    getFolderItems(folder.id);
+    // handleFolderClick(folder.id);
+  };
+
   // Track whether the input is in edit mode
   const handleRenameSubmit = () => {
     if (newFolderName.trim() && newFolderName !== folder.name) {
@@ -78,72 +83,84 @@ function FolderItems({
               {folder?.name}
             </h2>
           ) : (
-            <div className="flex items-center justify-center gap-2">
-              <input
-                type="text"
-                value={newFolderName}
-                onChange={(e) => setNewFolderName(e.target.value)}
-                onKeyPress={handleRenameKeyPress} // Submit on "Enter"
-                className="border w-full p-1 text-[10px] rounded-md"
-                style={{
-                  width: "100%",
-                  maxWidth: "120px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              />
-              <button
-                type="button"
-                className="bg-green-500 text-white text-[10px] px-2 py-1 rounded"
-                onClick={handleRenameSubmit}
-              >
-                Save
-              </button>
-            </div>
+            <>
+              <div className="flex items-center justify-center gap-2">
+                <input
+                  type="text"
+                  value={newFolderName}
+                  onChange={(e) => setNewFolderName(e.target.value)}
+                  onKeyPress={handleRenameKeyPress} // Submit on "Enter"
+                  className="border w-full p-1 text-[10px] rounded-md"
+                  style={{
+                    width: "100%",
+                    maxWidth: "120px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="bg-green-500 text-white text-[10px] px-2 py-1 rounded"
+                  onClick={handleRenameSubmit}
+                >
+                  Save
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>
       {!isFolderBin && (
-        <div className="flex justify-between mt-2">
+        <>
           <button
-            type="button"
-            onClick={() => handleStarred(folder.id)}
-            className="bg-blue-500 text-white px-1 py-1 rounded"
-            aria-label="Star Folder"
-            title="Star Folder"
+            type="submit"
+            className="bg-blue-500 w-full rounded-lg text-white text-xs p-1"
+            onClick={handleSubfolderClick}
           >
-            <TbTagStarred />
+            Open
           </button>
 
-          <button
-            type="button"
-            onClick={() => setFolderRenaming(true)} // Show input to rename
-            className="bg-green-500 text-white px-1 py-1 rounded"
-            aria-label="Rename Folder"
-            title="Rename Folder"
-          >
-            <MdDriveFileRenameOutline />
-          </button>
+          <div className="flex justify-between mt-2">
+            <button
+              type="button"
+              onClick={() => handleStarred(folder.id)}
+              className="bg-blue-500 text-white px-1 py-1 rounded"
+              aria-label="Star Folder"
+              title="Star Folder"
+            >
+              <TbTagStarred />
+            </button>
 
-          <button
-            type="button"
-            onClick={() => handleBinned(folder.id)}
-            className="bg-yellow-500 text-white px-1 py-1 rounded"
-            aria-label="Move to Bin"
-            title="Move to Bin"
-          >
-            <FaRecycle />
-          </button>
-          <button
-            type="button"
-            onClick={() => handledelete(folder.id)}
-            className="bg-red-500 text-white px-1 py-1 rounded"
-            aria-label="Delete Folder"
-            title="Delete Folder"
-          >
-            <AiOutlineDelete />
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={() => setFolderRenaming(true)} // Show input to rename
+              className="bg-green-500 text-white px-1 py-1 rounded"
+              aria-label="Rename Folder"
+              title="Rename Folder"
+            >
+              <MdDriveFileRenameOutline />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleBinned(folder.id)}
+              className="bg-yellow-500 text-white px-1 py-1 rounded"
+              aria-label="Move to Bin"
+              title="Move to Bin"
+            >
+              <FaRecycle />
+            </button>
+            <button
+              type="button"
+              onClick={() => handledelete(folder.id)}
+              className="bg-red-500 text-white px-1 py-1 rounded"
+              aria-label="Delete Folder"
+              title="Delete Folder"
+            >
+              <AiOutlineDelete />
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
