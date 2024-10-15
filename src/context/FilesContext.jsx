@@ -25,11 +25,11 @@ export const FilesProvider = ({ children }) => {
 
   const devurl = "https://proodoosfiles.onrender.com";
   // const devurl = "http://api.proodosfiles.com";
-  // const clientdevurl = "https://www.proodosfiles.com"
+  const clientdevurl = "https://www.proodosfiles.com"
   // const clientdevurl = "https://proodo-files-ozie.vercel.app"
   
   // const devurl = "http://127.0.0.1:8000";
-  const clientdevurl = "http://localhost:5173";
+  // const clientdevurl = "http://localhost:5173";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -359,6 +359,7 @@ export const FilesProvider = ({ children }) => {
 
   const renameFile = async (file_id, new_name) => {
     try {
+      // const res = await fetch(`https://proodoosfiles.onrender.com/api/fi/rename/`, {
       const res = await fetch(`https://proodoosfiles.onrender.com/api/fi/rename/`, {
       // const res = await fetch(`http://127.0.0.1:8000/api/fi/rename/`, {
       // const res = await fetch(

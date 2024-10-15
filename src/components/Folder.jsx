@@ -5,6 +5,7 @@ import FolderItems from "./FolderItems";
 import FolderFiles from "./FolderFiles";
 import Loaders from "./shared/Loaders";
 import ButtonLoader from "./shared/ButtonLoader";
+import Documents from "./Documents";
 
 const Folder = () => {
   const {
@@ -157,6 +158,10 @@ const Folder = () => {
 
       <div>
         <FolderFiles />
+      </div>
+
+      <div>
+        <Documents />
       </div>
     </>
   );
