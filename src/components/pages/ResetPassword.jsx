@@ -30,7 +30,7 @@ function ResetPassword() {
         setUidb64(parsedInfo.u_id);
         setToken(parsedInfo.token);
       } catch (error) {
-        setMessage(error);
+        setMessage("Reset link is invalid");
       }
     } else {
       setMessage("Reset link is missing.");
