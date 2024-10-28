@@ -30,7 +30,8 @@ function ResetPassword() {
         setUidb64(parsedInfo.u_id);
         setToken(parsedInfo.token);
       } catch (error) {
-        setMessage("Invalid reset link.");
+        setMessage("Invalid reset link");
+        console.log(error);
       }
     } else {
       setMessage("Reset link is missing.");
